@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Our Christmas, Wrapped</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Wrapped">
+<meta name="theme-color" content="#a3182f">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, playful family keepsake, never babyish
+   IDEA: a wall of wrapped presents you unwrap one by one all December
+   PICTURE: the present grid itself, gold-foil scratch reveal, story-style recap
+   COLOUR & TYPE: cranberry band, pine and gold foil on snow white; Bagel Fat One + Nunito
+   LAYOUT: tag-style header band, progress line, present grid; full-screen recap stories */
+:root{color-scheme:light dark;--bg:light-dark(#fdfaf7,#15100f);--ink:light-dark(#2a1719,#f6ece7);--mut:light-dark(#7d6467,#bba6a2);--card:light-dark(#fff,#231a19);--line:light-dark(#ecdfd7,#3b2e2c);--red:#a3182f;--pine:#123f30;--gold:#e2a93b}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Nunito,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Bagel Fat One",Nunito,sans-serif;font-weight:400;line-height:1.05;text-wrap:balance;margin:0}
+button,input,select,textarea{font:inherit;font-size:16px;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.top{background:var(--red);color:#fff;padding:22px max(5vw,16px) 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:clamp(30px,6vw,46px);flex:1 1 260px}
+.top p{margin:4px 0 0;opacity:.85;font-weight:700}
+.tb{display:flex;gap:8px}.tb[hidden]{display:none}
+.pill{min-height:44px;padding:0 18px;border-radius:99px;font-weight:800;background:#fff;color:var(--red)}
+.pill.alt{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #ffffff99}
+.band{padding:clamp(20px,4vw,48px) max(5vw,16px);max-width:1240px;margin:0 auto}
+.prog{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin-bottom:20px;font-weight:700}
+.prog b{font-size:28px;color:var(--red)}
+.bar{flex:1 1 200px;height:12px;border-radius:9px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--pine),#2c7a55);border-radius:9px;transition:width .6s}
+.mut{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.tile{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;text-align:left;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 2px 0 #0000001a,0 8px 18px -10px #0000004d}
+.wrap::before,.wrap::after{content:"";position:absolute;background:var(--gold);box-shadow:0 0 0 1px #00000014}
+.wrap::before{left:calc(50% - 9px);top:0;bottom:0;width:18px}
+.wrap::after{top:calc(50% - 9px);left:0;right:0;height:18px}
+.w0{background:repeating-linear-gradient(45deg,#a3182f 0 14px,#bb2741 14px 28px)}
+.w1{background:#123f30 radial-gradient(#e2a93b 2px,transparent 2.6px) 0 0/22px 22px}
+.w2{background:repeating-linear-gradient(90deg,#f1dfc9 0 10px,#e6cfb4 10px 20px)}
+.w2::before,.w2::after{background:var(--red)}
+.tag{position:relative;z-index:1;align-self:flex-start;background:#fff;color:#2a1719;font-weight:800;font-size:14px;padding:4px 10px 4px 16px;border-radius:4px 8px 8px 4px;transform:rotate(-4deg);box-shadow:0 2px 6px #0003}
+.tag::before{content:"";position:absolute;left:6px;top:calc(50% - 3px);width:6px;height:6px;border-radius:50%;background:#d9cfc6}
+.rev{background:var(--card);box-shadow:inset 0 0 0 2px var(--line);border-top:8px solid var(--c)}
+.cat{font-size:13px;font-weight:800;color:var(--c,var(--mut))}
+.tt{font-weight:800;font-size:17px;line-height:1.2;margin-top:4px}
+.cta{margin-top:10px;font-size:14px;font-weight:800;color:var(--pine)}
+:root[data-theme=dark] .cta{color:#7fd1a8}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .cta{color:#7fd1a8}}
+.done{background:var(--pine) center/cover no-repeat;color:#fff}
+.done::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,#000000b3)}
+.done .tt{position:relative;z-index:1;text-shadow:0 1px 3px #0008}
+.chk{position:absolute;z-index:1;top:10px;right:10px;width:32px;height:32px;border-radius:50%;background:var(--gold);color:#2a1719;display:grid;place-items:center;font-weight:800}
+.star{position:absolute;z-index:1;top:10px;left:10px;background:#fff;color:var(--red);font-size:12px;font-weight:800;padding:3px 8px;border-radius:99px}
+.setup{max-width:760px}
+.setup h2{font-size:clamp(28px,5vw,40px);margin-bottom:8px}
+label{display:block;font-weight:800;margin:16px 0 6px}
+input[type=text],textarea,select{width:100%;min-height:48px;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card)}
+textarea{min-height:90px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.grp{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.gh{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.gh h4{margin:0;font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px}
+.gh h4 i{width:12px;height:12px;border-radius:50%}
+.link.sm{margin:0;font-size:14px}
+.scr canvas.fx{pointer-events:none;z-index:2;transition:none}
+.tip{font-size:14px;color:var(--mut);max-width:34ch;margin:4px auto 0;line-height:1.35}
+.how{padding-left:22px;margin:12px 0}.how li{margin-bottom:8px}
+.hh{font-size:17px;font-weight:800;margin:14px 0 4px}
+.chip{min-height:44px;padding:8px 14px;border-radius:99px;font-weight:700;background:var(--card);box-shadow:inset 0 0 0 2px var(--line)}
+.chip[aria-pressed=true]{background:var(--pine);color:#fff;box-shadow:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.row>*{flex:1 1 140px}
+.big{min-height:52px;padding:0 22px;border-radius:14px;background:var(--red);color:#fff;font-weight:800;font-size:17px}
+.big:disabled{opacity:.4}
+.ghost{min-height:52px;padding:0 18px;border-radius:14px;box-shadow:inset 0 0 0 2px var(--line);font-weight:800}
+.link{min-height:44px;text-decoration:underline;font-weight:800;color:var(--red);margin-top:6px}
+.mod{position:fixed;inset:0;background:#0009;display:grid;place-items:end center;z-index:20;padding:0}
+.mod[hidden],#story[hidden]{display:none}
+.sheet{background:var(--bg);width:min(560px,100%);max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:24px max(5vw,18px) 28px}
+@media(min-width:700px){.mod{place-items:center}.sheet{border-radius:22px}}
+.sheet h3{font-size:28px;margin-bottom:6px}
+.scr{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;margin:14px 0 8px;background:var(--card);box-shadow:inset 0 0 0 2px var(--line)}
+.under{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:20px;gap:6px}
+.under b{font-family:"Bagel Fat One",sans-serif;font-weight:400;font-size:clamp(24px,6vw,34px);line-height:1.1}
+.scr canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;transition:opacity .5s}
+.ph{display:grid;place-items:center;aspect-ratio:4/3;border-radius:16px;border:2px dashed var(--line);background:var(--card) center/cover no-repeat;color:var(--mut);cursor:pointer;margin-top:12px}
+.fav{display:flex;align-items:center;gap:10px;min-height:44px}
+.fav input{width:22px;height:22px;accent-color:var(--red)}
+#story{position:fixed;inset:0;z-index:30;color:#fff;display:flex;flex-direction:column;user-select:none}
+.segs{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:4px;z-index:3}
+.segs i{flex:1;height:4px;border-radius:4px;background:#ffffff59}
+.segs i.on{background:#fff}
+.x{position:absolute;top:26px;right:12px;z-index:3;width:44px;height:44px;border-radius:50%;background:#0004;color:#fff;font-size:22px}
+.sl{flex:1;display:flex;flex-direction:column;justify-content:center;padding:70px max(7vw,24px) 40px;max-width:640px;width:100%;margin:0 auto;gap:14px;position:relative;z-index:2}
+.sl h2{font-size:clamp(36px,9vw,58px)}
+.sl .k{font-weight:800;opacity:.85;font-size:18px;margin:0}
+.huge{font-family:"Bagel Fat One",sans-serif;font-size:clamp(90px,28vw,170px);line-height:.9}
+.rows{display:grid;gap:10px;margin-top:6px}
+.rw{display:grid;grid-template-columns:7.5em 1fr 2em;gap:10px;align-items:center;font-weight:800}
+.rw span:last-child{text-align:right}
+.rw .bar{background:#ffffff33;height:14px}
+.rw .bar i{background:#fff}
+.pbg{position:absolute;inset:0;background:center/cover no-repeat;z-index:1}
+.pbg::after{content:"";position:absolute;inset:0;background:linear-gradient(#0000 40%,#000c)}
+.sl.ph2{justify-content:flex-end}
+.sv{background:#fff;color:var(--red);min-height:52px;border-radius:14px;font-weight:800;font-size:17px;padding:0 22px;align-self:flex-start}
+.out img{width:100%;border-radius:12px;display:block;margin:12px 0}
+.small{font-size:13px}
+
+.top{background:radial-gradient(#ffffff3d 1.5px,transparent 2px) 0 0/34px 34px,radial-gradient(#ffffff24 1px,transparent 1.5px) 17px 17px/34px 34px,var(--red)}
+.lights{height:28px;background-color:var(--red);background-image:linear-gradient(#3b1d20,#3b1d20),radial-gradient(circle at 12px 17px,#ffd34d 5px,#ffd34d55 7px,transparent 9px),radial-gradient(circle at 36px 17px,#ff5a66 5px,#ff5a6655 7px,transparent 9px),radial-gradient(circle at 60px 17px,#5fe0a2 5px,#5fe0a255 7px,transparent 9px),radial-gradient(circle at 84px 17px,#7cc0ff 5px,#7cc0ff55 7px,transparent 9px);background-size:100% 2px,96px 28px,96px 28px,96px 28px,96px 28px;background-position:0 9px,0 0,0 0,0 0,0 0;background-repeat:no-repeat,repeat-x,repeat-x,repeat-x,repeat-x}
+.gift{background:none;box-shadow:none;padding:0;overflow:visible;transform:rotate(var(--r,0deg))}
+.gift .box{position:absolute;left:9%;right:9%;top:24%;bottom:3%;border-radius:8px;background:var(--pat);box-shadow:0 12px 18px -12px #0007,inset 0 -12px 0 #0000001c}
+.gift .lid{position:absolute;left:-6%;right:-6%;top:0;height:23%;border-radius:6px;background:var(--pat);filter:brightness(1.1);box-shadow:0 5px 0 #00000029,inset 0 -3px 0 #00000024}
+.gift .rv{position:absolute;left:43%;width:14%;top:0;bottom:0;background:var(--rb);box-shadow:inset 2px 0 0 #ffffff40,inset -2px 0 0 #0000001a;z-index:1}
+.gift .bow{position:absolute;top:3%;left:50%;width:58%;transform:translateX(-50%);z-index:2;color:var(--rb);filter:drop-shadow(0 2px 2px #0005)}
+.gift .tag{position:absolute;left:2%;bottom:9%;z-index:3}
+.g0{--pat:repeating-linear-gradient(45deg,#a3182f 0 12px,#bd2a44 12px 24px);--rb:#e8b44a}
+.g1{--pat:radial-gradient(#e8b44a 2.2px,transparent 2.8px) 0 0/20px 20px,#123f30;--rb:#d9343f}
+.g2{--pat:repeating-linear-gradient(90deg,#efdcc4 0 10px,#e4ccae 10px 20px);--rb:#a3182f}
+.g3{--pat:radial-gradient(#fff 2px,transparent 2.6px) 0 0/16px 16px,radial-gradient(#fff 2px,transparent 2.6px) 8px 8px/16px 16px,#d99a2b;--rb:#a3182f}
+.g4{--pat:repeating-linear-gradient(0deg,#ffffff26 0 6px,transparent 6px 22px),repeating-linear-gradient(90deg,#ffffff26 0 6px,transparent 6px 22px),repeating-linear-gradient(90deg,#00000026 0 2px,transparent 2px 11px),#1d5a43;--rb:#f4eee4}
+.g5{--pat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34'%3E%3Cg stroke='white' stroke-width='1.6' stroke-linecap='round' opacity='.8'%3E%3Cpath d='M17 8v18M9.2 12.5l15.6 9M9.2 21.5l15.6-9'/%3E%3C/g%3E%3C/svg%3E") 0 0/34px 34px,#7d1022;--rb:#e8b44a}
+.gift.next{animation:hop 2.6s ease-in-out infinite}
+@keyframes hop{0%,70%,100%{transform:rotate(var(--r)) translateY(0)}78%{transform:rotate(var(--r)) translateY(-8px)}86%{transform:rotate(var(--r)) translateY(0)}92%{transform:rotate(var(--r)) translateY(-3px)}}
+@keyframes wig{0%,100%{transform:rotate(var(--r))}25%{transform:rotate(calc(var(--r) - 5deg))}75%{transform:rotate(calc(var(--r) + 5deg))}}
+@media(hover:hover){.gift:hover{animation:wig .45s ease-in-out}}
+.rev .cbow{position:absolute;top:6px;right:8px;width:38px;color:var(--c);opacity:.9}
+.pile{display:flex;gap:12px;width:min(320px,80%);margin:0 0 14px}
+.pile .gift{position:relative;flex:1;aspect-ratio:1;display:block}
+@media(prefers-reduced-motion:reduce){.gift,.gift.next,.gift:hover{animation:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div style="flex:1 1 260px"><h1 id="ttl">Our Christmas, Wrapped</h1><p id="sub">A Christmas bucket list that turns into your family's keepsake</p></div>
+  <div class="tb" id="tb" hidden><button class="pill" id="bW">Our Wrapped</button><button class="pill alt" id="bS" aria-label="Settings">Edit</button></div>
+</header>
+<div class="lights" aria-hidden="true"></div>
+<main id="app"></main>
+<div class="mod" id="mod" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div id="story" hidden></div>
+<script>
+{
+const K='ocw-v1',$=s=>document.querySelector(s);
+const CATS={baking:{n:'Baking',t:'The Cookie Crew',c:'#c2571a'},outings:{n:'Outings',t:'The Light Chasers',c:'#2d5fa8'},cozy:{n:'Cozy nights',t:'The Cozy Club',c:'#7b3f8c'},crafts:{n:'Crafts',t:'The Glue Gun Gang',c:'#2f7d5b'},giving:{n:'Giving',t:'The Kindness Squad',c:'#b3263c'},traditions:{n:'Traditions',t:'The Tradition Keepers',c:'#9a6b12'}};
+const DEF=[['baking','Bake Christmas cookies'],['baking','Build a gingerbread house'],['baking','Make a hot cocoa bar'],['baking','Decorate cookies for Santa'],['outings','Drive to see Christmas lights'],['outings','Visit Santa'],['outings','Pick out our Christmas tree'],['outings','Go to a holiday market'],['outings','Go ice skating'],['cozy','Christmas movie night in PJs'],['cozy','Read a Christmas story by the tree'],['cozy','Camp out under the tree'],['cozy','Christmas music dance party'],['cozy','Matching pajama night'],['crafts','Make a homemade ornament'],['crafts','Write letters to Santa'],['crafts','Make paper snowflakes'],['crafts','Make our family Christmas card'],['crafts','Wrap gifts together'],['giving','Donate toys'],['giving','Leave treats for delivery drivers'],['giving','Make a card for a neighbor'],['giving','Do a secret kindness'],['giving','Bake treats for teachers'],['traditions','Decorate the tree together'],['traditions','Open a Christmas Eve box'],['traditions','Track Santa on Christmas Eve'],['traditions','Leave cookies and carrots out'],['traditions','Family Christmas game night'],['traditions','Look at old Christmas photos']];
+const BRAND='Little Traditions Co. on Etsy',CODE='JOLLY2026',UK='ocw-unlock';
+const TIPS={'Bake Christmas cookies':'Pick one easy dough and let the kids own the sprinkles. The mess is part of the memory.','Build a gingerbread house':'Use a store kit and glue it with thick icing. Let it set for an hour before decorating.','Make a hot cocoa bar':'Set out marshmallows, crushed candy canes, whipped cream and sprinkles in a muffin tin.','Decorate cookies for Santa':'Let each kid decorate one cookie just for Santa and one for themselves.','Drive to see Christmas lights':'Pajamas on, cocoa in travel mugs, music up. Vote on the best house.','Visit Santa':'Weekday evenings usually mean shorter lines. Have the kids think of one question for Santa.','Pick out our Christmas tree':'Give each kid a job: measuring, choosing or naming the tree.','Go to a holiday market':'Give each kid a few dollars to pick one treat or ornament on their own.','Go ice skating':'Look for a rink with skate helpers for little ones, and bring dry socks for after.','Christmas movie night in PJs':'Build a blanket nest on the floor and let the youngest pick the movie.','Read a Christmas story by the tree':'Turn off every light except the tree and take turns reading pages.','Camp out under the tree':'Pile sleeping bags under the tree and fall asleep to the twinkle lights.','Christmas music dance party':'Everyone adds two songs to the playlist. Silly dancing is required.','Matching pajama night':'Snap the photo before anyone spills cocoa.','Make a homemade ornament':'Salt dough is easy: 2 parts flour, 1 part salt, 1 part water. Bake low and slow, then paint.','Write letters to Santa':'Have kids write one wish for themselves and one for someone else.','Make paper snowflakes':'Fold a coffee filter into a triangle, snip, unfold and tape them to the windows.','Make our family Christmas card':'Let the kids draw the front and write the inside together.','Wrap gifts together':'Put on music and give the kids the tape job. Crooked bows count.','Donate toys':'Let each kid choose a toy to donate and drop it off together.','Leave treats for delivery drivers':'Set a basket of snacks and water by the door with a thank-you sign.','Make a card for a neighbor':'Pick someone who lives alone and deliver it together.','Do a secret kindness':'Leave a kind note on a car or pay for the order behind you. Shh, it is a secret.','Bake treats for teachers':'Package cookies in a jar with a tag your kid writes.','Decorate the tree together':'Let each kid hang their favorite ornament first and tell its story.','Open a Christmas Eve box':'Fill a box with new pajamas, a movie, cocoa and a book for Christmas Eve.','Track Santa on Christmas Eve':'Check where Santa is before bed. The best reason to go to sleep early.','Leave cookies and carrots out':'Have the kids write Santa a note and leave carrots for the reindeer.','Family Christmas game night':'Pick one game everyone can play. The winner wears the Santa hat.','Look at old Christmas photos':'Pull up photos from past Christmases and let the kids guess who is who.'};
+let AC=null,lt=0;
+const snd={init(){if(S&&S.mute)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();AC.resume&&AC.resume()}catch(e){}},
+  scr(){if(!AC||(S&&S.mute))return;try{if(AC.currentTime-lt<.045)return;lt=AC.currentTime;const n=Math.floor(AC.sampleRate*.06),b=AC.createBuffer(1,n,AC.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=AC.createBufferSource();s.buffer=b;const f=AC.createBiquadFilter();f.type='bandpass';f.frequency.value=2600+Math.random()*1600;f.Q.value=.9;const g=AC.createGain();g.gain.value=.22;s.connect(f);f.connect(g);g.connect(AC.destination);s.start()}catch(e){}},
+  chime(){if(!AC||(S&&S.mute))return;try{const t=AC.currentTime;[1047,1319,1568,2093].forEach((fr,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=fr;g.gain.setValueAtTime(0,t+i*.08);g.gain.linearRampToValueAtTime(.18,t+i*.08+.02);g.gain.exponentialRampToValueAtTime(.001,t+i*.08+.6);o.connect(g);g.connect(AC.destination);o.start(t+i*.08);o.stop(t+i*.08+.65)})}catch(e){}}};
+const isUnl=()=>true;
+const BOW='<svg class="bow" viewBox="0 0 100 60" aria-hidden="true"><path d="M50 32C38 12 14 2 9 16c-5 15 23 19 41 16z" fill="currentColor"/><path d="M50 32C62 12 86 2 91 16c5 15-23 19-41 16z" fill="currentColor"/><path d="M50 32 37 57M50 32l13 25" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M47 30C39 18 24 11 17 17" stroke="#00000030" stroke-width="3" fill="none"/><path d="M53 30C61 18 76 11 83 17" stroke="#00000030" stroke-width="3" fill="none"/><circle cx="50" cy="31" r="8" fill="currentColor"/><circle cx="48" cy="29" r="3" fill="#ffffff55"/></svg>';
+const gift=(k,r)=>`<span class="box"><span class="lid"></span><span class="rv"></span></span>${BOW}`;
+let S=null,P={},tmp=null,db=null;
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const fmt=s=>{if(!s)return'';const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-US',{month:'short',day:'numeric'})};
+const daysTo=()=>{const n=new Date(),x=new Date(n.getFullYear(),11,25);return n>x?0:Math.ceil((x-n)/864e5)};
+const unlocked=()=>{const n=new Date();return (n.getMonth()===11&&n.getDate()>=24)||n.getMonth()===0};
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function load(){try{S=JSON.parse(localStorage.getItem(K))}catch(e){S=null}}
+function idb(){return new Promise(r=>{try{const q=indexedDB.open('ocw',1);q.onupgradeneeded=()=>q.result.createObjectStore('p');q.onsuccess=()=>{db=q.result;r()};q.onerror=()=>r()}catch(e){r()}})}
+function tx(mode,fn){return new Promise(r=>{if(!db)return r(null);try{const t=db.transaction('p',mode),st=t.objectStore('p'),q=fn(st);t.oncomplete=()=>r(q&&q.result);t.onerror=()=>r(null)}catch(e){r(null)}})}
+const pSet=(k,v)=>{P[k]=v;return tx('readwrite',s=>s.put(v,k))};
+const pDel=k=>{delete P[k];return tx('readwrite',s=>s.delete(k))};
+const pGet=k=>tx('readonly',s=>s.get(k));
+const pClear=()=>{P={};return tx('readwrite',s=>s.clear())};
+function shrink(file,max=1080){return new Promise((res,rej)=>{const u=URL.createObjectURL(file),im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',.82))};im.onerror=rej;im.src=u})}
+function render(){
+  const a=$('#app');$('#tb').hidden=!S||!isUnl();
+  if(!isUnl()){a.innerHTML=`<section class="band setup"><h2>Welcome! Let's unwrap your Christmas</h2><p class="mut">Enter the code from your download to get started.</p><label for="cd">Your code</label><input type="text" id="cd" autocomplete="off" autocapitalize="characters" placeholder="Code from your PDF"><p class="mut small" id="cm"></p><div class="row"><button class="big" id="unl">Unlock</button></div><p class="mut small" style="margin-top:18px">Made for one household. Please don't share your link or code.</p></section>`;return}
+  if(!S){tmp=tmp||{sel:DEF.map(()=>true),cus:[]};$('#ttl').textContent='Our Christmas, Wrapped';$('#sub').textContent="A Christmas bucket list that turns into your family's keepsake";a.innerHTML=setupHTML();return}
+  $('#ttl').textContent=S.fam+' Christmas';$('#sub').textContent=S.kids?'Starring '+S.kids:'Our Christmas bucket list';
+  const n=S.items.length,d=S.items.filter(i=>i.done).length;
+  a.innerHTML=`<section class="band"><div class="prog"><span><b>${d}</b> of ${n} done</span><div class="bar" aria-hidden="true"><i style="width:${n?d/n*100:0}%"></i></div><span class="mut">${daysTo()} days until Christmas</span></div>
+  ${S.demo?'<p class="mut small">This is a sample family so you can see how it works. Tap Edit, then Start over, to make your own list.</p>':''}
+  <div class="grid">${S.items.map(tile).join('')}</div>
+  <p class="mut small" style="margin-top:22px">Photos stay on this device only. Tap Edit to back them up. Made by Little Traditions Co.</p></section>`;
+}
+function tile(it,i){const c=CATS[it.cat]||CATS.traditions;
+  if(!it.rev){const nx=S.items.findIndex(x=>!x.rev)===i;return `<button class="tile gift g${i%6}${nx?' next':''}" style="--r:${((i*37)%5-2)*1.2}deg" data-id="${it.id}" aria-label="Unwrap present ${i+1}">${gift()}<span class="tag">${nx?'Unwrap next':'Unwrap '+(i+1)}</span></button>`}
+  if(!it.done)return `<button class="tile rev" style="--c:${c.c}" data-id="${it.id}">${BOW.replace('class="bow"','class="cbow"')}<span class="cat">${c.n}</span><span class="tt">${esc(it.t)}</span><span class="cta">Mark it done</span></button>`;
+  const ph=P[it.id];return `<button class="tile done" data-id="${it.id}" style="${ph?`background-image:url(${ph})`:''}">${it.fav?'<span class="star">Favorite</span>':''}<span class="chk" aria-hidden="true">✓</span><span class="tt">${esc(it.t)}</span></button>`}
+function setupHTML(){
+  const opts=Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v.n}</option>`).join('');
+  const all=Object.entries(CATS).map(([k,v])=>{const idx=DEF.map((d,i)=>d[0]===k?i:-1).filter(i=>i>=0),on=idx.every(i=>tmp.sel[i]);
+    const ch=idx.map(i=>`<button class="chip" data-chip="${i}" aria-pressed="${tmp.sel[i]}">${esc(DEF[i][1])}</button>`).join('')+tmp.cus.map((c,i)=>c[0]===k?`<button class="chip" data-cus="${i}" aria-pressed="true">${esc(c[1])}</button>`:'').join('');
+    return `<div class="grp"><div class="gh"><h4><i style="background:${v.c}"></i>${v.n}</h4><button class="link sm" data-all="${k}">${on?'Clear all':'Pick all'}</button></div><div class="chips">${ch}</div></div>`}).join('');
+  const cnt=tmp.sel.filter(Boolean).length+tmp.cus.length;
+  return `<section class="band setup"><div class="pile" aria-hidden="true">${[0,3,1].map((k,j)=>`<span class="tile gift g${k}" style="--r:${(j-1)*4}deg">${gift()}</span>`).join('')}</div><h2>Make your family's Christmas list</h2><p class="mut">Pick what you want to do this December. Each one hides inside a present to unwrap. Everything you finish becomes your family's Christmas, Wrapped on Christmas Eve.</p>
+  <label for="fam">Family name</label><input type="text" id="fam" placeholder="The Parker Family" value="${esc(tmp.fam)}">
+  <label for="kids">Kids' names (optional)</label><input type="text" id="kids" placeholder="Emma and Jack" value="${esc(tmp.kids)}">
+  <label>Your list <span class="mut">(${cnt} picked, tap to add or remove)</span></label>${all}
+  <label for="cus">Add your own tradition</label><div class="row" style="margin-top:0"><input type="text" id="cus" placeholder="Make Grandma's tamales" style="flex:2 1 200px"><select id="cc" style="flex:1 1 120px">${opts}</select><button class="ghost" id="addC">Add</button></div>
+  <div class="row"><button class="big" id="go" ${cnt?'':'disabled'}>Wrap up our list</button></div>
+  <button class="link" id="demo">Or try it with a sample family</button></section>`}
+function mkItems(list){return list.map((d,i)=>({id:'a'+Date.now().toString(36)+i,cat:d[0],t:d[1],rev:false,done:false,note:'',fav:false,date:''}))}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function famName(v){v=(v||'').trim();return v||'Our Family'}
+function open(html,after){$('#sheet').innerHTML=html;$('#mod').hidden=false;after&&after()}
+function close(){$('#mod').hidden=true;$('#sheet').innerHTML=''}
+function scratchUI(it){const c=CATS[it.cat],idx=S.items.indexOf(it)+1;
+  open(`<h3>Unwrap present ${idx}</h3><p class="mut">Scratch the gold paper to see what's inside.</p><div class="scr"><div class="under"><span class="cat" style="--c:${c.c}">${c.n}</span><b>${esc(it.t)}</b>${TIPS[it.t]?`<span class="tip">${esc(TIPS[it.t])}</span>`:''}</div><canvas id="sc" aria-label="Gold scratch layer"></canvas><canvas id="fx" class="fx" aria-hidden="true"></canvas></div><div class="row"><button class="ghost" id="skip">Just show me</button><button class="big" id="ok" disabled>Let's do it!</button></div>`,()=>{
+  const cv=$('#sc'),box=cv.parentNode,r=window.devicePixelRatio||1,W=box.clientWidth,H=box.clientHeight;cv.width=W*r;cv.height=H*r;const x=cv.getContext('2d');x.scale(r,r);
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#b9852a');g.addColorStop(.45,'#f3d37a');g.addColorStop(.55,'#e2a93b');g.addColorStop(1,'#a8741c');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='#fff8';for(let i=0;i<70;i++){x.beginPath();x.arc(Math.random()*W,Math.random()*H,Math.random()*2+.5,0,7);x.fill()}
+  x.fillStyle='#5a3a08';x.font='800 22px Nunito,sans-serif';x.textAlign='center';x.fillText('Scratch me!',W/2,H/2+8);
+  x.globalCompositeOperation='destination-out';x.lineCap='round';x.lineWidth=40;let down=false,last=null,moves=0,doneR=false;
+  const fx=$('#fx');fx.width=W*r;fx.height=H*r;const f=fx.getContext('2d');f.scale(r,r);let parts=[],run=false;const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const star=(px,py,s)=>{f.beginPath();f.moveTo(px,py-s);f.quadraticCurveTo(px,py,px+s,py);f.quadraticCurveTo(px,py,px,py+s);f.quadraticCurveTo(px,py,px-s,py);f.quadraticCurveTo(px,py,px,py-s);f.fill()};
+  const tick=()=>{f.clearRect(0,0,W,H);parts=parts.filter(p=>p.l>0);for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=.22;p.l-=.022;p.a+=.25;f.globalAlpha=Math.max(0,p.l);f.fillStyle=p.c;if(p.st)star(p.x,p.y,p.s*2.4*(.7+.3*Math.sin(p.a*2)));else{f.save();f.translate(p.x,p.y);f.rotate(p.a);f.fillRect(-p.s,-p.s/2,p.s*2,p.s);f.restore()}}f.globalAlpha=1;if(parts.length&&fx.isConnected)requestAnimationFrame(tick);else run=false};
+  const burst=(px,py,n,big)=>{if(calm)return;const cs=['#f3d37a','#e2a93b','#fff6d5','#ffffff','#c99430'];for(let i=0;i<n;i++)parts.push({x:px,y:py,vx:(Math.random()-.5)*(big?9:4),vy:(Math.random()-.75)*(big?9:4),l:1,s:Math.random()*2.5+(big?2:1.2),st:Math.random()<.35,c:cs[i%5],a:Math.random()*6});if(!run){run=true;requestAnimationFrame(tick)}};
+  const pt=e=>{const b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]};
+  const reveal=()=>{if(doneR)return;doneR=true;cv.style.opacity=0;setTimeout(()=>cv.remove(),500);for(let k=0;k<6;k++)burst(W*(.15+.7*Math.random()),H*(.2+.6*Math.random()),16,true);try{navigator.vibrate&&navigator.vibrate(30)}catch(e){}snd.chime();$('#ok').disabled=false;it.rev=true;save()};
+  const check=()=>{try{const d=x.getImageData(0,0,cv.width,cv.height).data;let t=0,n=0;for(let i=3;i<d.length;i+=160){n++;if(d[i]===0)t++}if(t/n>.45)reveal()}catch(e){reveal()}};
+  cv.addEventListener('pointerdown',e=>{snd.init();down=true;last=pt(e);cv.setPointerCapture(e.pointerId)});
+  cv.addEventListener('pointermove',e=>{if(!down)return;const p=pt(e);x.beginPath();x.moveTo(...last);x.lineTo(...p);x.stroke();for(let k=0;k<3;k++){x.beginPath();x.arc(p[0]+(Math.random()-.5)*34,p[1]+(Math.random()-.5)*34,Math.random()*7+3,0,7);x.fill()}last=p;burst(p[0],p[1],4,false);snd.scr();if(++moves%12===0)check()});
+  cv.addEventListener('pointerup',()=>{down=false;check()});
+  $('#skip').onclick=()=>{snd.init();reveal();setTimeout(()=>{close();render()},350)};$('#ok').onclick=()=>{close();render()}})}
+function doneUI(it){let ph=P[it.id]||null,changed=false;
+  open(`<h3>${esc(it.t)}</h3><p class="mut">${it.done?'Done on '+fmt(it.date)+'. You can change anything.':(TIPS[it.t]?'Tip: '+esc(TIPS[it.t])+' ':'')+'Add a photo and one line so it shows up in your Wrapped.'}</p>
+  <label class="ph" id="phb" for="pf" style="${ph?`background-image:url(${ph})`:''}"><span id="pht">${ph?'':'Tap to add a photo'}</span></label><input type="file" id="pf" accept="image/*" hidden>
+  <label for="nt">One line to remember it</label><textarea id="nt" maxlength="140" placeholder="Jack ate more icing than cookies.">${esc(it.note)}</textarea>
+  <label class="fav"><input type="checkbox" id="fv" ${it.fav?'checked':''}> Make this a favorite moment</label>
+  <div class="row">${it.done?'<button class="ghost" id="und">Not done yet</button>':'<button class="ghost" id="cn">Not yet</button>'}<button class="big" id="sv">${it.done?'Save changes':'We did it!'}</button></div>`,()=>{
+  $('#pf').onchange=async e=>{const f=e.target.files[0];if(!f)return;$('#pht').textContent='Adding photo...';try{ph=await shrink(f);changed=true;$('#phb').style.backgroundImage=`url(${ph})`;$('#pht').textContent=''}catch(er){$('#pht').textContent="That photo didn't load. Try another."}};
+  $('#cn')&&($('#cn').onclick=close);
+  $('#und')&&($('#und').onclick=()=>{it.done=false;save();close();render()});
+  $('#sv').onclick=async()=>{it.note=$('#nt').value.trim();it.fav=$('#fv').checked;if(!it.done){it.done=true;it.date=today()}if(changed&&ph)await pSet(it.id,ph);save();close();render()}})}
+function howUI(){open(`<h3>Welcome to your Christmas, Wrapped</h3>
+  <ol class="how"><li><b>Unwrap a present</b> whenever you're ready for your next activity. Scratch off the gold to see it.</li><li><b>Did it? Tap it</b> and add a photo and one line to remember it.</li><li><b>On Christmas Eve,</b> open Our Wrapped together, then save and share your keepsake.</li></ol>
+  <h4 class="hh">Put it on your home screen</h4><p><b>iPhone (Safari):</b> tap the Share button, then "Add to Home Screen."<br><b>Android (Chrome):</b> tap the ⋮ menu, then "Add to Home screen."</p>
+  <p class="mut small">Your photos stay on this phone only. Use Edit, then Download backup, every week or so. Made for one household, so please don't share your link or code.</p>
+  <div class="row"><button class="big" id="cl">Let's go</button></div>`,()=>$('#cl').onclick=close)}
+function settingsUI(){const opts=Object.entries(CATS).map(([k,v])=>`<option value="${k}">${v.n}</option>`).join('');
+  open(`<h3>Edit our list</h3><label for="ef">Family name</label><input type="text" id="ef" value="${esc(S.fam)}"><label for="ek">Kids' names</label><input type="text" id="ek" value="${esc(S.kids)}">
+  <label for="na">Add an activity</label><div class="row" style="margin-top:0"><input type="text" id="na" placeholder="Go caroling" style="flex:2 1 200px"><select id="nc" style="flex:1 1 120px">${opts}</select></div>
+  <div class="row"><button class="ghost" id="ra">Unwrap all presents</button><button class="big" id="es">Save</button></div>
+  <label>Back up photos and memories</label><p class="mut small" style="margin:0">Saves a file you can restore on any phone or computer.</p><div class="row"><button class="ghost" id="bx">Download backup</button><label class="ghost" for="bi" style="display:grid;place-items:center;margin:0">Restore backup</label><input type="file" id="bi" accept=".json,application/json" hidden></div><p class="mut small" id="bm"></p>
+  <div class="row"><button class="ghost" id="hw">How it works</button><button class="ghost" id="mu">Sounds: ${S.mute?'Off':'On'}</button></div>
+  <div class="row"><button class="ghost" id="del" style="color:var(--red)">Start over</button></div>`,()=>{
+  $('#hw').onclick=howUI;$('#mu').onclick=()=>{S.mute=!S.mute;save();$('#mu').textContent='Sounds: '+(S.mute?'Off':'On')};
+  $('#es').onclick=()=>{S.fam=famName($('#ef').value);S.kids=$('#ek').value.trim();const t=$('#na').value.trim();if(t)S.items.push(...mkItems([[$('#nc').value,t]]));save();close();render()};
+  $('#ra').onclick=()=>{S.items.forEach(i=>i.rev=true);save();close();render()};
+  $('#bx').onclick=()=>{try{const b=new Blob([JSON.stringify({S,P})],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='our-christmas-wrapped-backup.json';document.body.appendChild(a);a.click();a.remove();$('#bm').textContent='Backup file saved to your downloads.'}catch(e){$('#bm').textContent="Your browser blocked the download."}};
+  $('#bi').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const o=JSON.parse(await f.text());if(!o.S||!o.S.items)throw 0;S=o.S;await pClear();for(const k in o.P)await pSet(k,o.P[k]);save();close();render()}catch(er){$('#bm').textContent="That file isn't a backup from this page."}};
+  let arm=false;$('#del').onclick=async()=>{if(!arm){arm=true;$('#del').textContent='Tap again to erase everything';return}S=null;tmp=null;await pClear();try{localStorage.removeItem(K)}catch(e){}close();render()}})}
+function sampleImg(it,i){const c=document.createElement('canvas');c.width=c.height=800;const x=c.getContext('2d'),col=(CATS[it.cat]||CATS.traditions).c,g=x.createLinearGradient(0,0,800,800);g.addColorStop(0,col);g.addColorStop(1,'#123f30');x.fillStyle=g;x.fillRect(0,0,800,800);x.fillStyle='#ffffff22';for(let k=0;k<40;k++){x.beginPath();x.arc((k*197+i*61)%800,(k*331+i*17)%800,8+k%30,0,7);x.fill()}x.fillStyle='#fff';x.font='800 40px Nunito,sans-serif';x.textAlign='center';x.fillText('Sample photo',400,410);return c.toDataURL('image/jpeg',.8)}
+async function demo(){const pick=[0,1,4,5,9,10,14,15,19,21,24,28,2,6,12,16,22,26];S={fam:'The Parker Family',kids:'Emma and Jack',demo:true,items:mkItems(pick.map(i=>DEF[i]))};
+  const notes=['Jack ate more icing than cookies.','The roof caved in. We ate it anyway.','Emma counted 214 houses with lights.','Jack asked Santa for a real reindeer.','Everyone fell asleep before the ending.','Emma read it to all of us this year.','Glitter is still on the couch.','Emma asked Santa about the cookies.','The kids picked every toy themselves.','Mrs. Lee cried happy tears.','Dad found the ornament from 1998.','Emma won three rounds in a row.'];
+  const y=new Date().getFullYear();for(let i=0;i<S.items.length;i++){const it=S.items[i];it.rev=i<15;if(i<12){it.done=true;it.note=notes[i];it.date=y+'-12-'+String(i*2+1).padStart(2,'0');it.fav=i===2;await pSet(it.id,sampleImg(it,i))}}save();render()}
+function stats(){const D=S.items.filter(i=>i.done),cc={};D.forEach(i=>cc[i.cat]=(cc[i.cat]||0)+1);const top=Object.entries(cc).sort((a,b)=>b[1]-a[1]);return{D,cc,top,days:new Set(D.map(i=>i.date)).size}}
+function slides(){const {D,top,days}=stats(),fam=esc(S.fam),c0=top.length?CATS[top[0][0]]:CATS.traditions,mx=top.length?top[0][1]:1;
+  const L=[{bg:'#a3182f',h:`<p class="k">${new Date().getFullYear()}</p><h2>${fam}<br>Christmas, Wrapped</h2><p>${S.kids?'Starring '+esc(S.kids)+'. ':''}Let's look back at your December.</p>`},
+  {bg:'#123f30',h:`<p class="k">This December you checked off</p><div class="huge">${D.length}</div><h2>Christmas moments</h2><p>out of ${S.items.length} on your list, across ${days} different day${days===1?'':'s'}.</p>`},
+  {bg:c0.c,h:`<p class="k">Your family's Christmas personality</p><h2>${c0.t}</h2><div class="rows">${top.map(([k,v])=>`<div class="rw"><span>${CATS[k].n}</span><div class="bar"><i style="width:${v/mx*100}%"></i></div><span>${v}</span></div>`).join('')}</div>`}];
+  const ord=[...D].sort((a,b)=>(b.fav-a.fav)||((P[b.id]?1:0)-(P[a.id]?1:0))).slice(0,8);
+  ord.forEach(it=>{const ph=P[it.id];L.push({bg:'#1b1413',ph,h:`<p class="k">${it.fav?'Favorite moment · ':''}${fmt(it.date)}</p><h2>${esc(it.t)}</h2>${it.note?`<p style="font-size:20px;font-weight:700">"${esc(it.note)}"</p>`:''}`})});
+  L.push({bg:'#a3182f',h:`<h2>Merry Christmas from<br>${fam}</h2><p>Save your Wrapped as a picture to keep, print or send to Grandma.</p><button class="sv" id="mk">Save our Wrapped</button>`});return L}
+let SL=[],cur=0;
+function story(){SL=slides();cur=0;$('#story').hidden=false;document.body.style.overflow='hidden';draw()}
+function draw(){const s=SL[cur],st=$('#story');st.style.background=s.bg;
+  st.innerHTML=`<div class="segs">${SL.map((_,i)=>`<i class="${i<=cur?'on':''}"></i>`).join('')}</div><button class="x" id="sx" aria-label="Close">×</button>${s.ph?`<div class="pbg" style="background-image:url(${s.ph})"></div>`:''}<div class="sl ${s.ph?'ph2':''}">${s.h}</div>`;
+  $('#sx').onclick=e=>{e.stopPropagation();endStory()};const mk=$('#mk');mk&&(mk.onclick=e=>{e.stopPropagation();endStory();share('story')})}
+function endStory(){$('#story').hidden=true;$('#story').innerHTML='';document.body.style.overflow=''}
+$('#story').addEventListener('click',e=>{if(e.target.closest('button'))return;const back=e.clientX<window.innerWidth*.3;cur=Math.max(0,Math.min(SL.length-1,cur+(back?-1:1)));draw()});
+document.addEventListener('keydown',e=>{if($('#story').hidden){if(e.key==='Escape'&&!$('#mod').hidden)close();return}if(e.key==='Escape')endStory();if(e.key==='ArrowRight'){cur=Math.min(SL.length-1,cur+1);draw()}if(e.key==='ArrowLeft'){cur=Math.max(0,cur-1);draw()}});
+function loadImg(src){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src})}
+async function collage(kind){try{await document.fonts.ready}catch(e){}
+  const st=kind!=='post',W=1080,H=st?1920:1350,yr=new Date().getFullYear(),{D,top}=stats(),c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  x.fillStyle='#a3182f';x.fillRect(0,0,W,H);x.fillStyle='#e2a93b40';for(let i=0;i<70;i++){x.beginPath();x.arc((i*173)%W,(i*311)%H,3,0,7);x.fill()}
+  x.fillStyle='#fff';x.textAlign='center';
+  if(st){x.font='400 84px "Bagel Fat One",sans-serif';x.fillText('Our Christmas,',540,190);x.fillText('Wrapped',540,285);x.font='800 40px Nunito,sans-serif';x.fillText(S.fam+' · '+yr,540,360)}
+  else{x.font='400 68px "Bagel Fat One",sans-serif';x.fillText('Our Christmas, Wrapped',540,120);x.font='800 34px Nunito,sans-serif';x.fillText(S.fam+' · '+yr,540,180)}
+  const g=st?{cols:2,x0:70,y0:430,cw:450,ch:390,sx:490,sy:430,fs:28,sy2:1790,sf:46}:{cols:3,x0:45,y0:230,cw:310,ch:460,sx:340,sy:480,fs:22,sy2:1255,sf:36};
+  const pics=[...D].sort((a,b)=>(b.fav-a.fav)||((P[b.id]?1:0)-(P[a.id]?1:0))).slice(0,6);
+  for(let i=0;i<6;i++){const col=i%g.cols,row=Math.floor(i/g.cols),X=g.x0+col*g.sx,Y=g.y0+row*g.sy,it=pics[i],pw=g.cw-28,ph=g.ch-90;x.fillStyle='#fff';x.fillRect(X,Y,g.cw,g.ch);
+    if(!it){x.fillStyle='#f1dfc9';x.fillRect(X+14,Y+14,pw,ph);continue}
+    const im=P[it.id]?await loadImg(P[it.id]):null;if(im){const k=Math.max(pw/im.width,ph/im.height),w=pw/k,h=ph/k;x.drawImage(im,(im.width-w)/2,(im.height-h)/2,w,h,X+14,Y+14,pw,ph)}else{x.fillStyle=CATS[it.cat].c;x.fillRect(X+14,Y+14,pw,ph)}
+    x.fillStyle='#2a1719';x.font=`800 ${g.fs}px Nunito,sans-serif`;let t=it.t;while(x.measureText(t).width>pw&&t.length>4)t=t.slice(0,-2);if(t!==it.t)t=t.trim()+'…';x.fillText(t,X+g.cw/2,Y+g.ch-32)}
+  x.fillStyle='#fff';x.font=`800 ${g.sf}px Nunito,sans-serif`;x.fillText(D.length+' Christmas moments'+(top.length?' · '+CATS[top[0][0]].t:''),540,g.sy2);
+  if(BRAND){x.fillStyle='#ffffffcc';x.font='700 26px Nunito,sans-serif';x.fillText('Make your own at '+BRAND,540,H-40)}
+  return c}
+async function share(kind){const c=await collage(kind),url=c.toDataURL('image/png'),blob=await new Promise(r=>{try{c.toBlob(r,'image/png')}catch(e){r(null)}});
+  open(`<h3>Your Christmas, Wrapped</h3><p class="mut">Share it to your story, text it to Grandma, or press and hold the picture to save it.</p>
+  <div class="row" style="margin-top:8px"><button class="chip" id="ks" aria-pressed="${kind!=='post'}">Story size</button><button class="chip" id="kp" aria-pressed="${kind==='post'}">Post size</button></div>
+  <div class="out"><img src="${url}" alt="Our Christmas, Wrapped keepsake"></div><div class="row"><button class="big" id="sh">Share</button><button class="ghost" id="dl">Save picture</button></div><div class="row" style="margin-top:8px"><button class="ghost" id="cl">Done</button></div><p class="mut small" id="dm"></p>`,()=>{
+  const msg=t=>$('#dm').textContent=t;
+  $('#cl').onclick=close;$('#ks').onclick=()=>share('story');$('#kp').onclick=()=>share('post');
+  $('#sh').onclick=async()=>{try{const file=blob&&new File([blob],'our-christmas-wrapped.png',{type:'image/png'});if(file&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Our Christmas, Wrapped',text:S.fam+' Christmas, Wrapped'})}else msg("Sharing isn't available in this browser. Press and hold the picture to save it, then post it from your photos.")}catch(e){if(e&&e.name!=='AbortError')msg("Sharing was blocked here. Press and hold the picture to save it, then post it from your photos.")}};
+  $('#dl').onclick=()=>{try{const a=document.createElement('a');a.href=url;a.download='our-christmas-wrapped.png';document.body.appendChild(a);a.click();a.remove();msg('If nothing saved, press and hold the picture instead.')}catch(e){msg('Saving was blocked here. Press and hold the picture instead.')}}})}
+$('#app').addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
+  if(t.id==='unl'){const v=$('#cd').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(v===CODE){try{localStorage.setItem(UK,'1')}catch(er){}render()}else $('#cm').textContent="That code doesn't match. Check the PDF that came with your order.";return}
+  if(!S){if(t.dataset.chip!==undefined){tmp.fam=$('#fam').value;tmp.kids=$('#kids').value;const i=+t.dataset.chip;tmp.sel[i]=!tmp.sel[i];render();return}
+    if(t.dataset.all){tmp.fam=$('#fam').value;tmp.kids=$('#kids').value;const idx=DEF.map((d,i)=>d[0]===t.dataset.all?i:-1).filter(i=>i>=0),on=idx.every(i=>tmp.sel[i]);idx.forEach(i=>tmp.sel[i]=!on);render();return}
+    if(t.dataset.cus!==undefined){tmp.fam=$('#fam').value;tmp.kids=$('#kids').value;tmp.cus.splice(+t.dataset.cus,1);render();return}
+    if(t.id==='addC'){const v=$('#cus').value.trim();tmp.fam=$('#fam').value;tmp.kids=$('#kids').value;if(v)tmp.cus.push([$('#cc').value,v]);render();return}
+    if(t.id==='go'){const list=DEF.filter((_,i)=>tmp.sel[i]).concat(tmp.cus);S={fam:famName($('#fam').value),kids:$('#kids').value.trim(),items:mkItems(shuffle(list))};tmp=null;save();render();window.scrollTo(0,0);howUI();return}
+    if(t.id==='demo'){demo();return}return}
+  const it=S.items.find(i=>i.id===t.dataset.id);if(!it)return;it.rev?doneUI(it):scratchUI(it)});
+$('#mod').addEventListener('click',e=>{if(e.target.id==='mod')close()});
+$('#bS').onclick=settingsUI;
+$('#bW').onclick=()=>{if(!S.items.some(i=>i.done)){open(`<h3>Nothing to wrap yet</h3><p class="mut">Finish an activity or two and your recap starts filling in.</p><div class="row"><button class="big" id="cl">Got it</button></div>`,()=>$('#cl').onclick=close);return}
+  if(unlocked()||S.demo){story();return}
+  open(`<h3>Your Wrapped opens on Christmas Eve</h3><p class="mut">Keep checking things off. On December 24 your family's recap is ready to watch together.</p><div class="row"><button class="ghost" id="pk">Peek now</button><button class="big" id="cl">I'll wait</button></div>`,()=>{$('#cl').onclick=close;$('#pk').onclick=()=>{close();story()}})};
+try{const ic=document.createElement('canvas');ic.width=ic.height=180;const g=ic.getContext('2d');g.fillStyle='#a3182f';g.fillRect(0,0,180,180);g.fillStyle='#e2a93b';g.fillRect(78,0,24,180);g.fillRect(0,78,180,24);g.beginPath();g.ellipse(70,70,24,14,-.6,0,7);g.ellipse(110,70,24,14,.6,0,7);g.fill();const l=document.createElement('link');l.rel='apple-touch-icon';l.href=ic.toDataURL('image/png');document.head.appendChild(l)}catch(e){}
+(async()=>{load();await idb();if(S)for(const it of S.items){if(it.done){const v=await pGet(it.id);if(v)P[it.id]=v}}render()})();
+}
+</script>
+</body>
+</html>
