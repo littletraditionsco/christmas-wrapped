@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Who Stole Santa? A Christmas Eve Mystery</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0c241c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Who Stole Santa?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: cozy storybook whodunit, playful never scary
+   IDEA: a snowy Christmas Eve case file passed from phone to phone
+   PICTURE: night-pine sky with falling snow, cream case cards, gold clue stamps
+   COLOUR & TYPE: pine night, cranberry, gold foil on cream; Bagel Fat One + Nunito */
+:root{--night:#0c241c;--night2:#123f30;--cream:#fbf6ee;--ink:#2a1719;--mut:#7d6467;--red:#a3182f;--red2:#c2223d;--gold:#e2a93b;--line:#eadfce;--ok:#2c7a55}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(120% 80% at 50% 0%,#18523e 0%,var(--night) 60%) fixed,var(--night);color:#fff;font:17px/1.5 Nunito,system-ui,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent}
+h1,h2,h3{font-family:"Bagel Fat One",Nunito,sans-serif;font-weight:400;line-height:1.05;margin:0;text-wrap:balance}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.snow{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.snow i{position:absolute;top:-10px;width:6px;height:6px;border-radius:50%;background:#fff;opacity:.7;animation:fall linear infinite}
+@keyframes fall{to{transform:translate3d(30px,110vh,0)}}
+@media (prefers-reduced-motion:reduce){.snow{display:none}}
+main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 16px 120px}
+.brand{font-weight:900;letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--gold);text-align:center;margin:6px 0 2px}
+.hero{text-align:center;padding:26px 0 10px}
+.hero h1{font-size:clamp(44px,13vw,72px);color:#fff;text-shadow:0 3px 0 var(--red)}
+.hero p{margin:10px auto 0;max-width:30em;opacity:.85;font-weight:700}
+.card{background:var(--cream);color:var(--ink);border-radius:22px;padding:20px;margin:14px 0;box-shadow:0 10px 30px #0006}
+.card h2{font-size:28px;color:var(--red);margin-bottom:8px}
+.card h3{font-size:21px;color:var(--night2);margin:14px 0 6px}
+.mut{color:var(--mut)}
+.small{font-size:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;padding:12px 18px;border-radius:16px;background:var(--red);color:#fff;font-weight:900;font-size:18px;margin:10px 0;box-shadow:0 4px 0 #6d0f1f}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #6d0f1f}
+.btn.gold{background:var(--gold);color:var(--ink);box-shadow:0 4px 0 #a87a1f}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.btn.pine{background:var(--night2);box-shadow:0 4px 0 #06160f}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.row{display:flex;gap:10px;align-items:center}
+.row>*{flex:1}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{border-radius:18px;padding:14px;text-align:left;background:#fff;box-shadow:inset 0 0 0 2px var(--line);color:var(--ink)}
+.mode b{display:block;font-size:18px}
+.mode span{font-size:14px;color:var(--mut)}
+.mode[aria-pressed=true]{box-shadow:inset 0 0 0 3px var(--red);background:#fff3f4}
+.player{display:flex;gap:8px;align-items:center;margin:8px 0}
+.player .num{width:30px;height:30px;border-radius:50%;background:var(--night2);color:#fff;display:grid;place-items:center;font-weight:900;font-size:14px;flex:none}
+.player input{flex:1;min-height:48px;border-radius:12px;border:2px solid var(--line);padding:0 12px;background:#fff;color:var(--ink);font-size:17px}
+.toggle{flex:none;display:flex;flex-direction:column;align-items:center;font-size:11px;font-weight:800;color:var(--mut);width:72px;line-height:1.1;text-align:center}
+.toggle i{display:block;width:46px;height:28px;border-radius:99px;background:#d8cfc2;position:relative;margin-bottom:3px;transition:.2s}
+.toggle i:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.toggle[aria-pressed=true] i{background:var(--ok)}
+.toggle[aria-pressed=true] i:after{left:21px}
+.x{flex:none;width:40px;height:40px;border-radius:12px;color:var(--mut);font-size:22px}
+.codebox{text-align:center;padding:10px 0}
+.code{font-family:"Bagel Fat One",sans-serif;font-size:clamp(38px,12vw,56px);letter-spacing:.06em;color:var(--red)}
+.qr{display:flex;justify-content:center;margin:8px auto}
+.qr img,.qr svg{width:min(260px,70vw);height:auto;background:#fff;padding:10px;border-radius:14px}
+.list{list-style:none;padding:0;margin:8px 0}
+.list li{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border:0}
+.pick{width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 2px var(--line);margin:8px 0;color:var(--ink);font-weight:800;font-size:18px}
+.pick .em{font-size:28px}
+.peek{position:relative;border-radius:22px;overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.cover{position:absolute;inset:0;background:repeating-linear-gradient(45deg,var(--red) 0 18px,var(--red2) 18px 36px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;text-align:center;padding:20px;z-index:2;transition:opacity .15s}
+.cover b{font-family:"Bagel Fat One",sans-serif;font-size:26px;font-weight:400}
+.cover .bow{font-size:54px}
+.peek.open .cover{opacity:0;pointer-events:none}
+.char-top{display:flex;gap:14px;align-items:center}
+.char-top .big{font-size:54px;line-height:1}
+.char-top h2{margin:0}
+.traits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.trait{background:#fff;border-radius:14px;padding:10px 6px;text-align:center;box-shadow:inset 0 0 0 2px var(--line)}
+.trait .e{font-size:30px;display:block}
+.trait small{display:block;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.trait b{font-size:14px;line-height:1.2;display:block}
+.note{background:#fff6dd;border-left:5px solid var(--gold);border-radius:12px;padding:12px 14px;margin:10px 0}
+.thief{background:var(--ink);color:#fff;border-radius:16px;padding:16px;margin:12px 0}
+.thief h3{color:var(--gold);margin-top:0}
+.stage{text-align:center;padding:6px 0 0}
+.stage .time{display:inline-block;background:var(--gold);color:var(--ink);font-weight:900;border-radius:99px;padding:4px 14px;font-size:14px}
+.stage h2{font-size:34px;color:#fff;margin:10px 0 6px}
+.beat{font-size:18px;opacity:.92;font-style:italic;margin:0 0 6px}
+.evidence{text-align:center}
+.evidence .e{font-size:72px;line-height:1.1;display:block;margin:6px 0}
+.evidence .stamp{display:inline-block;transform:rotate(-3deg);border:3px solid var(--red);color:var(--red);font-weight:900;letter-spacing:.12em;text-transform:uppercase;padding:2px 10px;border-radius:8px;font-size:13px}
+.evidence p{font-size:20px;font-weight:800;margin:10px 0 0}
+.sus{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line)}
+.sus:last-child{border:0}
+.sus .em{font-size:26px}
+.sus .nm{flex:1;line-height:1.2}
+.sus .nm small{display:block;color:var(--mut);font-size:13px}
+.sus.out .nm{text-decoration:line-through;opacity:.45}
+.sus button{flex:none;min-width:84px;min-height:40px;border-radius:12px;font-weight:800;font-size:14px;box-shadow:inset 0 0 0 2px var(--line)}
+.sus.out button{background:var(--line)}
+.found{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.found span{background:#fff;border-radius:99px;padding:4px 10px;font-size:14px;font-weight:800;box-shadow:inset 0 0 0 2px var(--line)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:#08180fee;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;justify-content:center;gap:4px;padding:8px 8px max(8px,env(safe-area-inset-bottom))}
+.tabs button{flex:1;max-width:150px;min-height:54px;border-radius:14px;font-weight:800;font-size:13px;color:#fff;opacity:.7;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
+.tabs button span{font-size:22px}
+.tabs button[aria-current=true]{opacity:1;background:#ffffff1a}
+.overlay{position:fixed;inset:0;z-index:20;background:radial-gradient(120% 80% at 50% 0%,#18523e 0%,#08180f 70%);overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+.overlay .pw{font-size:min(40vw,200px);line-height:1}
+.overlay .pww{font-family:"Bagel Fat One",sans-serif;font-size:clamp(48px,14vw,110px);color:var(--gold);letter-spacing:.04em}
+.pics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.pics button{aspect-ratio:1;font-size:44px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 2px var(--line)}
+.pics button.bad{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.field{width:100%;min-height:56px;border-radius:14px;border:2px solid var(--line);padding:0 14px;background:#fff;color:var(--ink);font-size:22px;font-weight:800;text-align:center;letter-spacing:.08em;text-transform:uppercase}
+.tally{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.tally .nm{flex:1;font-weight:800;line-height:1.2}
+.tally .nm small{display:block;font-weight:700;color:var(--mut);font-size:13px}
+.tally button{width:44px;height:44px;border-radius:12px;font-size:24px;font-weight:900;box-shadow:inset 0 0 0 2px var(--line)}
+.tally b{width:30px;text-align:center;font-size:22px}
+.accuse{font-family:"Bagel Fat One",sans-serif;font-size:clamp(40px,11vw,70px);color:#fff;line-height:1.05}
+.closed{background:linear-gradient(160deg,#123f30,#0c241c);color:#fff;border-radius:22px;padding:24px;text-align:center;box-shadow:0 0 0 4px var(--gold) inset,0 10px 30px #0008;margin:14px 0}
+.closed .stamp{display:inline-block;transform:rotate(-6deg);border:4px solid var(--gold);color:var(--gold);font-family:"Bagel Fat One",sans-serif;font-size:34px;padding:2px 16px;border-radius:10px}
+.closed h2{font-size:30px;margin:14px 0 4px}
+.closed ul{list-style:none;padding:0;margin:12px 0;font-weight:700}
+.closed li{padding:2px 0}
+.steps{padding-left:22px}
+.steps li{margin:8px 0}
+.hostbar{display:flex;gap:8px;flex-wrap:wrap}
+.hostbar .btn{flex:1 1 140px;margin:4px 0}
+.stagebtn{width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line);margin:8px 0}
+.stagebtn .n{width:36px;height:36px;border-radius:50%;background:var(--line);display:grid;place-items:center;font-weight:900;flex:none}
+.stagebtn.done .n{background:var(--ok);color:#fff}
+.stagebtn.next{box-shadow:inset 0 0 0 3px var(--red)}
+.stagebtn.next .n{background:var(--red);color:#fff}
+.stagebtn b{display:block}
+.stagebtn small{color:var(--mut)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:99px;font-weight:800;z-index:30}
+.center{text-align:center}
+a{color:var(--gold)}
+.card a{color:var(--red)}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="snow" id="snow" aria-hidden="true"></div>
+<main id="app"></main>
+<script src="qrcode.js"></script>
+<script src="game.js"></script>
+<script>
+'use strict';
+const W = window.WSS;
+const $app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STAGES = ['Your character', 'Round 1', 'Round 2', 'Round 3', 'Accuse', 'Reveal'];
+
+/* ---------- snow ---------- */
+(function () {
+  const s = document.getElementById('snow');
+  for (let i = 0; i < 40; i++) {
+    const f = document.createElement('i');
+    const z = 2 + Math.random() * 5;
+    f.style.cssText = `left:${Math.random()*100}%;width:${z}px;height:${z}px;opacity:${.3+Math.random()*.6};animation-duration:${8+Math.random()*12}s;animation-delay:${-Math.random()*20}s`;
+    s.appendChild(f);
+  }
+})();
+
+/* ---------- storage (safe if blocked) ---------- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ---------- app state ---------- */
+let S = { view: 'home' };
+function go(view, extra) { S = Object.assign({}, S, { view }, extra || {}); render(); window.scrollTo(0, 0); }
+function toast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 2200);
+}
+
+/* ---------- reading the link ---------- */
+function readHash() {
+  const h = new URLSearchParams(location.hash.slice(1));
+  const code = h.get('g');
+  if (!code) return null;
+  const setup = W.decode(code);
+  if (!setup) return null;
+  let names = (h.get('n') || '').split('|').map(s => s.trim()).slice(0, setup.count);
+  return { code: code.toUpperCase().replace(/[^A-Z0-9]/g, ''), setup, names };
+}
+function linkFor(code, names) {
+  const base = location.origin + location.pathname;
+  return base + '#g=' + code + '&n=' + names.map(n => encodeURIComponent(n.replace(/\|/g, ' '))).join('|');
+}
+function playerLabel(G, i) { return (G.names[i] && G.names[i].trim()) ? G.names[i] : 'Player ' + (i + 1); }
+
+/* ---------- load a game into memory ---------- */
+function loadGame(code, setup, names) {
+  const saved = store.get('wss-names-' + code, null);
+  const nm = [];
+  for (let i = 0; i < setup.count; i++) nm.push((names && names[i]) || (saved && saved[i]) || '');
+  if (nm.some(Boolean)) store.set('wss-names-' + code, nm);
+  const game = W.build(setup);
+  return { code, setup, names: nm, game };
+}
+function pstate(G, me) { return store.get('wss-p-' + G.code + '-' + me, { stage: 0, out: [], vote: null, seen: false }); }
+function psave(G, me, st) { store.set('wss-p-' + G.code + '-' + me, st); }
+
+/* ================= VIEWS ================= */
+function render() {
+  const v = S.view;
+  if (v === 'home') return vHome();
+  if (v === 'how') return vHow();
+  if (v === 'setup') return vSetup();
+  if (v === 'host') return vHost();
+  if (v === 'join') return vJoin();
+  if (v === 'who') return vWho();
+  if (v === 'play') return vPlay();
+}
+
+function vHome() {
+  $app.innerHTML = `
+  <div class="brand">Little Traditions Co.</div>
+  <div class="hero"><h1>Who Stole Santa?</h1>
+  <p>A Christmas Eve mystery for 4 to 14 players. Everyone plays on their own phone or tablet. Nothing to print.</p></div>
+  <button class="btn gold" data-go="setup">🎅 Host a new game</button>
+  <button class="btn pine" data-go="join">🔑 Join with a game code</button>
+  <button class="btn ghost" data-go="how">How to play</button>
+  ${resumeHTML()}`;
+  bind();
+}
+function resumeHTML() {
+  const last = store.get('wss-last', null);
+  if (!last || !W.decode(last.code)) return '';
+  return `<div class="card small"><b>Game in progress</b><br><span class="mut">Code ${W.prettyCode(last.code)}</span>
+  <button class="btn pine" id="resume">Go back to that game</button></div>`;
+}
+
+function vHow() {
+  $app.innerHTML = `
+  <div class="brand">Little Traditions Co.</div>
+  <div class="card"><h2>How to play</h2>
+  <p>Santa vanished on Christmas Eve, and one of your guests took him. Find the thief before midnight.</p>
+  <h3>What you need</h3>
+  <ul class="steps">
+   <li>4 to 14 players and about 45 minutes.</li>
+   <li>One phone, iPad, tablet or laptop per player. Any device with a web browser works. No app to download.</li>
+   <li>Not enough devices? Two players can share one. Each card stays hidden until its owner presses and holds to peek.</li>
+  </ul>
+  <h3>Host (2 minutes)</h3>
+  <ol class="steps">
+   <li>Tap <b>Host a new game</b>. Pick <b>Family</b> (ages 6+) or <b>Grown-ups</b>.</li>
+   <li>Type each player's name. Switch off <b>Can keep a secret</b> for anyone too little to keep a big secret. They will never be the thief.</li>
+   <li>Tap <b>Create game</b>. You get a QR code and an 8-letter game code. You can play too: nobody knows the thief, not even the host.</li>
+  </ol>
+  <h3>Players join</h3>
+  <ol class="steps">
+   <li><b>Scan the QR code</b> with your phone or iPad camera, then tap your name.</li>
+   <li><b>No camera, or it won't scan?</b> Open this game's link, tap <b>Join with a game code</b> and type the 8-letter code from the host's screen. Then tap your player number. The host's screen shows who is which number.</li>
+   <li>Press and hold your card to read it privately.</li>
+  </ol>
+  <h3>The game</h3>
+  <ol class="steps">
+   <li>The host taps <b>Play the story</b> and everyone listens.</li>
+   <li>Each round, the host shows an <b>elf password</b> (a picture or a word). Tap or type it to open the next round's clue.</li>
+   <li>Talk, ask questions and cross suspects off. Everyone tells the truth, except the thief, who may fib.</li>
+   <li>After round 3, everyone secretly picks a suspect, then shows their phone on the count of three. Then the thief stands up and confesses.</li>
+  </ol>
+  <p class="mut small">Tip: turn the host's phone volume up for the story. Pin this page to your home screen to find it again next Christmas.</p>
+  </div>
+  <button class="btn" data-go="home">Back</button>`;
+  bind();
+}
+
+/* ---------- host setup ---------- */
+function vSetup() {
+  if (!S.draft) S.draft = { mode: 'f', players: [{ n: '', k: true }, { n: '', k: true }, { n: '', k: true }, { n: '', k: true }] };
+  const d = S.draft;
+  $app.innerHTML = `
+  <div class="brand">Host a new game</div>
+  <div class="card"><h2>1. Pick a mode</h2>
+   <div class="modes">
+    <button class="mode" data-mode="f" aria-pressed="${d.mode==='f'}"><b>Family</b><span>Ages 6+. Picture clues. Only players who can keep a secret can be the thief.</span></button>
+    <button class="mode" data-mode="g" aria-pressed="${d.mode==='g'}"><b>Grown-ups</b><span>Riddle clues, cheekier secrets and a secret mission for every player.</span></button>
+   </div></div>
+  <div class="card"><h2>2. Who's playing?</h2>
+   <p class="mut small">4 to 14 players. Include yourself if you're playing. ${d.mode==='f' ? 'Switch off "Can keep a secret" for little ones who might blurt it out.' : ''}</p>
+   <div id="plist">${d.players.map((p, i) => `
+    <div class="player">
+      <span class="num">${i+1}</span>
+      <input data-i="${i}" placeholder="Player ${i+1} name" value="${esc(p.n)}" maxlength="18" autocomplete="off">
+      ${d.mode==='f' ? `<button class="toggle" data-k="${i}" aria-pressed="${p.k}" aria-label="Can keep a secret"><i></i>Can keep a secret</button>` : ''}
+      ${d.players.length > 4 ? `<button class="x" data-x="${i}" aria-label="Remove player">×</button>` : ''}
+    </div>`).join('')}</div>
+   ${d.players.length < 14 ? `<button class="btn ghost" id="add">+ Add a player</button>` : ''}
+  </div>
+  <button class="btn gold" id="create">Create game</button>
+  <button class="btn ghost" data-go="home">Back</button>`;
+  $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { d.mode = b.dataset.mode; if (d.mode === 'g') d.players.forEach(p => p.k = true); vSetup(); });
+  $app.querySelectorAll('[data-i]').forEach(inp => inp.oninput = () => { d.players[+inp.dataset.i].n = inp.value; });
+  $app.querySelectorAll('[data-k]').forEach(b => b.onclick = () => { const p = d.players[+b.dataset.k]; p.k = !p.k; b.setAttribute('aria-pressed', p.k); });
+  $app.querySelectorAll('[data-x]').forEach(b => b.onclick = () => { d.players.splice(+b.dataset.x, 1); vSetup(); });
+  const add = document.getElementById('add');
+  if (add) add.onclick = () => { d.players.push({ n: '', k: true }); vSetup(); setTimeout(() => { const ins = $app.querySelectorAll('[data-i]'); ins[ins.length - 1].focus(); }, 30); };
+  document.getElementById('create').onclick = () => {
+    const names = d.players.map((p, i) => p.n.trim() || ('Player ' + (i + 1)));
+    const keep = d.players.map(p => d.mode === 'g' ? true : p.k);
+    if (!keep.some(Boolean)) { toast('At least one player has to be able to keep a secret'); return; }
+    const seed = Math.floor(Math.random() * 65536);
+    const code = W.encode({ seed, mode: d.mode, count: names.length, keep });
+    store.set('wss-names-' + code, names);
+    store.set('wss-host-' + code, { tally: {}, stage: 0 });
+    store.set('wss-last', { code, role: 'host' });
+    history.replaceState(null, '', linkFor(code, names));
+    S.draft = null;
+    S.G = loadGame(code, W.decode(code), names);
+    go('host');
+  };
+  bind();
+}
+
+/* ---------- host panel ---------- */
+function vHost() {
+  const G = S.G, host = store.get('wss-host-' + G.code, { tally: {}, stage: 0 });
+  const link = linkFor(G.code, G.names);
+  const fam = G.setup.mode === 'f';
+  const stageInfo = [
+    { t: 'Play the story', s: 'Everyone gathers round. Turn your volume up.' },
+    { t: 'Round 1', s: '10:00 PM. The search begins' },
+    { t: 'Round 2', s: '11:00 PM. The trail' },
+    { t: 'Round 3', s: '11:30 PM. The last clue' },
+    { t: 'Accuse', s: '11:50 PM. Name the thief' },
+    { t: 'The reveal', s: 'Midnight' }
+  ];
+  $app.innerHTML = `
+  <div class="brand">Host controls · ${fam ? 'Family' : 'Grown-ups'} mode</div>
+  <div class="card codebox">
+    <h2 style="margin-bottom:0">Scan to join</h2>
+    <div class="qr" id="qr"></div>
+    <div class="mut small">or type this game code</div>
+    <div class="code">${W.prettyCode(G.code)}</div>
+    <ul class="list" style="text-align:left">${G.names.map((n, i) => `<li><span class="num" style="width:30px;height:30px;border-radius:50%;background:var(--night2);color:#fff;display:grid;place-items:center;font-weight:900;font-size:14px">${i+1}</span><b>${esc(n)}</b></li>`).join('')}</ul>
+    <div class="hostbar">
+      <button class="btn pine" id="share">Share link</button>
+      <button class="btn ghost" id="copy">Copy link</button>
+    </div>
+  </div>
+  <div class="card"><h2>Run the game</h2>
+   <p class="mut small">Go top to bottom. For rounds, tap the step to read the story beat aloud and show the elf password everyone needs.</p>
+   ${stageInfo.map((st, i) => `<button class="stagebtn ${i < host.stage ? 'done' : ''} ${i === host.stage ? 'next' : ''}" data-stage="${i}"><span class="n">${i < host.stage ? '✓' : i === 0 ? '▶' : i}</span><span><b>${st.t}</b><small>${st.s}</small></span></button>`).join('')}
+  </div>
+  ${host.revealed ? '' : `<div class="card"><h2>Votes</h2><p class="mut small">At the Accuse step, everyone shows their phone. Tap + for each vote.</p>
+    ${G.game.chars.map((id, i) => { const c = W.BY_ID[id]; const v = host.tally[i] || 0; return `<div class="tally"><span style="font-size:24px">${c.emoji}</span><span class="nm">${esc(c.name)}<small>${esc(playerLabel(G, i))}</small></span><button data-minus="${i}">−</button><b>${v}</b><button data-plus="${i}">+</button></div>`; }).join('')}
+  </div>`}
+  ${host.revealed ? revealHostHTML(G, host) : ''}
+  <button class="btn gold" id="mycard">🎭 Play my character</button>
+  <button class="btn ghost" id="newgame">Start a new game</button>`;
+  drawQR(document.getElementById('qr'), link);
+  document.getElementById('copy').onclick = () => copyText(link);
+  document.getElementById('share').onclick = () => { if (navigator.share) navigator.share({ title: 'Who Stole Santa?', text: 'Join the game! Code ' + W.prettyCode(G.code), url: link }).catch(() => {}); else copyText(link); };
+  $app.querySelectorAll('[data-plus]').forEach(b => b.onclick = () => { host.tally[b.dataset.plus] = (host.tally[b.dataset.plus] || 0) + 1; store.set('wss-host-' + G.code, host); vHost(); });
+  $app.querySelectorAll('[data-minus]').forEach(b => b.onclick = () => { host.tally[b.dataset.minus] = Math.max(0, (host.tally[b.dataset.minus] || 0) - 1); store.set('wss-host-' + G.code, host); vHost(); });
+  $app.querySelectorAll('[data-stage]').forEach(b => b.onclick = () => runStage(+b.dataset.stage));
+  document.getElementById('mycard').onclick = () => go('who', { fromHost: true });
+  document.getElementById('newgame').onclick = () => { if (confirmInline('newgame')) { store.set('wss-last', null); history.replaceState(null, '', location.pathname); S.G = null; go('setup'); } };
+}
+let armed = {};
+function confirmInline(key) {
+  if (armed[key]) { armed = {}; return true; }
+  armed = { [key]: true }; toast('Tap again to confirm'); setTimeout(() => armed = {}, 3000); return false;
+}
+function revealHostHTML(G, host) {
+  const T = W.BY_ID[G.game.chars[G.game.thief]];
+  const total = Object.values(host.tally).reduce((a, b) => a + b, 0);
+  const right = host.tally[G.game.thief] || 0;
+  const win = total > 0 ? right * 2 > total : null;
+  return `<div class="card center"><h2>${win === null ? 'The reveal' : win ? 'The detectives win!' : 'The thief got away!'}</h2>
+   <p><b>${esc(T.name)}</b> (${esc(playerLabel(G, G.game.thief))}) took Santa.</p><p><i>"${esc(cap(T.why))}."</i></p>
+   <p>Santa was ${esc(T.hide)}.</p>
+   ${total ? `<p class="mut small">${right} of ${total} votes were right.</p>` : ''}
+   <button class="btn pine" id="playend">🔊 Read the ending aloud</button></div>
+   ${closedHTML(G, win)}`;
+}
+function runStage(i) {
+  const G = S.G, host = store.get('wss-host-' + G.code, { tally: {}, stage: 0 });
+  if (i === 0) {
+    host.stage = Math.max(host.stage, 1); store.set('wss-host-' + G.code, host);
+    showOverlay(`<div class="brand">The story</div><h2 style="font-size:40px;margin:10px 0">Santa is missing</h2><p class="beat" id="line" style="max-width:32em;font-size:20px"></p><button class="btn gold" id="stop" style="max-width:320px">Stop</button>`);
+    Narrator.story(W.STORY.opening, line => { const el = document.getElementById('line'); if (el) el.textContent = line; }, () => closeOverlay(true));
+    document.getElementById('stop').onclick = () => { Narrator.stop(); closeOverlay(true); };
+    return;
+  }
+  const beat = W.STORY.beats[i - 1];
+  host.stage = Math.max(host.stage, i + 1); if (i === 5) host.revealed = true;
+  store.set('wss-host-' + G.code, host);
+  const fam = G.setup.mode === 'f';
+  const pw = fam ? `<div class="pw">${G.game.pics[i - 1]}</div>` : `<div class="pww">${G.game.words[i - 1]}</div>`;
+  showOverlay(`<span class="stage"><span class="time">${beat.time}</span></span><h2 style="font-size:34px;margin:10px 0">${beat.title}</h2>
+    <p class="beat" style="max-width:30em">${esc(beat.text)}</p>
+    <div class="mut small" style="color:#fff;opacity:.7;margin-top:14px">ELF PASSWORD</div>${pw}
+    <p style="opacity:.8">${fam ? 'Tap this picture' : 'Type this word'} on your phone to open ${i <= 3 ? 'round ' + i : i === 4 ? 'the accuse screen' : 'the reveal'}.</p>
+    <button class="btn gold" id="ok" style="max-width:320px">Done</button>`);
+  Narrator.beat(beat.text);
+  document.getElementById('ok').onclick = () => { Narrator.stop(); closeOverlay(true); };
+}
+function showOverlay(html) { closeOverlay(); const o = document.createElement('div'); o.className = 'overlay'; o.id = 'ov'; o.innerHTML = html; document.body.appendChild(o); }
+function closeOverlay(rerender) { const o = document.getElementById('ov'); if (o) o.remove(); if (rerender) render(); }
+
+/* ---------- join ---------- */
+function vJoin() {
+  $app.innerHTML = `
+  <div class="brand">Join a game</div>
+  <div class="card center"><h2>Type the game code</h2>
+   <p class="mut">It's the 8-letter code on the host's screen.</p>
+   <input class="field" id="code" placeholder="XXXX-XXXX" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false">
+   <button class="btn" id="go">Join</button>
+   <p class="mut small">Codes never use the letters O or I, so type a zero-looking letter as Q or D and a one-looking letter as L or J.</p>
+  </div>
+  <button class="btn ghost" data-go="home">Back</button>`;
+  const inp = document.getElementById('code');
+  inp.oninput = () => { let v = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8); inp.value = v.length > 4 ? v.slice(0, 4) + '-' + v.slice(4) : v; };
+  document.getElementById('go').onclick = () => {
+    const raw = inp.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    const setup = W.decode(raw);
+    if (!setup) { toast('That code doesn\'t look right. Check it and try again.'); return; }
+    S.G = loadGame(raw, setup, null);
+    store.set('wss-last', { code: raw, role: 'player' });
+    history.replaceState(null, '', location.pathname + '#g=' + raw);
+    go('who');
+  };
+  bind();
+}
+
+/* ---------- pick who you are ---------- */
+function vWho() {
+  const G = S.G;
+  const hasNames = G.names.some(Boolean);
+  $app.innerHTML = `
+  <div class="brand">Code ${W.prettyCode(G.code)}</div>
+  <div class="card"><h2>Who are you?</h2>
+  <p class="mut small">${hasNames ? 'Tap your name.' : 'Tap your player number. The host\'s screen shows who is which number.'} Sharing a device? Each player taps their own name when it's their turn.</p>
+  ${G.names.map((n, i) => `<button class="pick" data-me="${i}"><span class="em">🎄</span>${esc(playerLabel(G, i))}${hasNames ? '' : ''}</button>`).join('')}
+  </div>
+  ${S.fromHost ? '<button class="btn ghost" id="back">Back to host controls</button>' : ''}`;
+  $app.querySelectorAll('[data-me]').forEach(b => b.onclick = () => { S.me = +b.dataset.me; S.tab = 'card'; go('play'); });
+  const back = document.getElementById('back'); if (back) back.onclick = () => go('host');
+}
+
+/* ---------- the player's game ---------- */
+function vPlay() {
+  const G = S.G, me = S.me, st = pstate(G, me);
+  const game = G.game, fam = G.setup.mode === 'f';
+  const C = W.BY_ID[game.chars[me]];
+  const isThief = me === game.thief;
+  const tab = S.tab || 'card';
+  const stage = st.stage;
+  let body = '';
+
+  if (tab === 'card') {
+    body = `
+    <div class="peek ${st.peek ? 'open' : ''}" id="peek">
+      <div class="cover"><span class="bow">🎁</span><b>${esc(playerLabel(G, me))}'s secret card</b><span>Press and hold to peek. Let go to hide it.</span></div>
+      <div class="card" style="margin:0">
+        <div class="char-top"><span class="big">${C.emoji}</span><div><div class="mut small" style="font-weight:900">YOU ARE</div><h2>${esc(C.name)}</h2><b>${esc(C.job)}</b></div></div>
+        <p class="mut" style="margin:8px 0 0">${esc(C.pers)}</p>
+        <div class="traits">
+          <div class="trait"><span class="e">${W.LOC[C.loc].emoji}</span><small>At 8:30</small><b>${W.LOC[C.loc].name}</b></div>
+          <div class="trait"><span class="e">${W.FEET[C.feet].emoji}</span><small>On your feet</small><b>${cap(W.FEET[C.feet].name)}</b></div>
+          <div class="trait"><span class="e">${W.POCKET[C.pocket].emoji}</span><small>In your pocket</small><b>${W.POCKET[C.pocket].short}</b></div>
+        </div>
+        <p class="small">${esc(W.LOC[C.loc].desc)}</p>
+        <div class="note"><b>Your secret:</b> ${esc(fam ? C.secret : C.secretG)}</div>
+        ${!fam ? `<div class="note"><b>Your secret mission:</b> ${esc(game.missions[me])}</div>` : ''}
+        ${isThief ? thiefHTML(G, C) : `<p class="small"><b>You didn't take Santa.</b> Tell the truth when people ask where you were, and help catch the thief.</p>`}
+      </div>
+    </div>
+    ${stage === 0 ? unlockHTML(1) : `<button class="btn pine" data-tab="round">Go to ${STAGES[Math.min(stage, 5)]}</button>`}`;
+  } else if (tab === 'round') {
+    if (stage === 0) body = `<div class="card center"><h2>Waiting for round 1</h2><p>Listen to the story, then the host will show the first elf password.</p></div>${unlockHTML(1)}`;
+    else if (stage <= 3) body = roundHTML(G, me, stage, st) + (stage < 3 ? unlockHTML(stage + 1) : unlockHTML(4));
+    else if (stage === 4) body = accuseHTML(G, me, st) + unlockHTML(5);
+    else body = revealHTML(G, me, st);
+  } else if (tab === 'notes') {
+    body = notesHTML(G, me, st, stage);
+  } else if (tab === 'story') {
+    body = `<div class="card"><h2>The story</h2>${W.STORY.opening.map(p => `<p>${esc(p)}</p>`).join('')}
+    ${W.STORY.beats.slice(0, Math.min(stage, 4)).map(b => `<h3>${b.time}. ${b.title}</h3><p><i>${esc(b.text)}</i></p>`).join('')}</div>`;
+  }
+
+  $app.innerHTML = `
+  <div class="brand">${esc(playerLabel(G, me))} · ${STAGES[Math.min(stage, 5)]}</div>
+  ${body}
+  <button class="btn ghost" id="switch" style="margin-top:20px">${S.fromHost ? 'Back to host controls' : 'Switch player (shared device)'}</button>
+  <nav class="tabs">
+    <button data-tab="card" aria-current="${tab==='card'}"><span>🎭</span>My card</button>
+    <button data-tab="round" aria-current="${tab==='round'}"><span>🔎</span>${stage >= 4 ? (stage === 4 ? 'Accuse' : 'Reveal') : 'Clues'}</button>
+    <button data-tab="notes" aria-current="${tab==='notes'}"><span>📝</span>Suspects</button>
+    <button data-tab="story" aria-current="${tab==='story'}"><span>📖</span>Story</button>
+  </nav>`;
+
+  $app.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { S.tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
+  document.getElementById('switch').onclick = () => { if (S.fromHost) go('host'); else go('who'); };
+  const peek = document.getElementById('peek');
+  if (peek) {
+    const open = e => { e.preventDefault(); peek.classList.add('open'); };
+    const shut = () => peek.classList.remove('open');
+    peek.addEventListener('pointerdown', open);
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(ev => peek.addEventListener(ev, shut));
+    peek.addEventListener('contextmenu', e => e.preventDefault());
+  }
+  $app.querySelectorAll('[data-unlock]').forEach(b => b.onclick = () => unlock(+b.dataset.unlock));
+  $app.querySelectorAll('[data-out]').forEach(b => b.onclick = () => {
+    const i = +b.dataset.out; const s2 = pstate(G, me);
+    s2.out = s2.out.includes(i) ? s2.out.filter(x => x !== i) : s2.out.concat(i); psave(G, me, s2); render();
+  });
+  $app.querySelectorAll('[data-vote]').forEach(b => b.onclick = () => { const s2 = pstate(G, me); s2.vote = +b.dataset.vote; psave(G, me, s2); render(); });
+  const lock = document.getElementById('lock');
+  if (lock) lock.onclick = () => {
+    const s2 = pstate(G, me); const c = W.BY_ID[game.chars[s2.vote]];
+    showOverlay(`<div class="mut" style="color:#fff;opacity:.7;font-weight:900;letter-spacing:.1em">I ACCUSE</div><div style="font-size:90px">${c.emoji}</div><div class="accuse">${esc(c.name)}</div><p style="font-size:20px;opacity:.85">${esc(playerLabel(G, s2.vote))}</p><p style="opacity:.7">Hold your phone up on the count of three!</p><button class="btn gold" id="ok" style="max-width:320px">Done</button>`);
+    document.getElementById('ok').onclick = () => closeOverlay(true);
+  };
+  const rv = document.getElementById('doreveal');
+  if (rv) rv.onclick = () => { const s2 = pstate(G, me); s2.revealed = true; psave(G, me, s2); render(); };
+}
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function thiefHTML(G, C) {
+  const fam = G.setup.mode === 'f', cv = G.game.cover;
+  return `<div class="thief"><h3>🤫 Shh... you're the thief!</h3>
+   <p><b>Why you did it:</b> ${esc(cap(C.why))}.</p>
+   <p><b>Where Santa is:</b> ${esc(C.hide)}. He's safe and cozy.</p>
+   <p><b>Your cover story:</b> if anyone asks, say you were in the <b>${W.LOC[cv.loc].name}</b> at 8:30${!fam ? `, that you wear <b>${W.FEET[cv.feet].name}</b>, and that you have <b>${W.POCKET[cv.pocket].name}</b> in your pocket` : ''}.</p>
+   <p class="small" style="opacity:.8">${fam ? 'You are the only one allowed to fib, and only about where you were. Act natural, and don\'t tell anyone!' : 'You may fib about anything. Everyone else must tell the truth. Blend in, point fingers and try not to get caught.'}</p></div>`;
+}
+function unlockHTML(next) {
+  const label = next <= 3 ? 'Round ' + next : next === 4 ? 'the accuse screen' : 'the reveal';
+  return `<button class="btn gold" data-unlock="${next}">🔓 Enter the elf password for ${label}</button>`;
+}
+function unlock(next) {
+  const G = S.G, me = S.me, fam = G.setup.mode === 'f';
+  const answer = fam ? G.game.pics[next - 1] : G.game.words[next - 1];
+  const done = () => { const s2 = pstate(G, me); s2.stage = Math.max(s2.stage, next); psave(G, me, s2); closeOverlay(); S.tab = 'round'; render(); window.scrollTo(0, 0); chime(); };
+  if (fam) {
+    const pics = W.PASS_PICS.slice();
+    showOverlay(`<h2 style="font-size:30px">Elf password</h2><p style="opacity:.85">Tap the picture on the host's screen.</p>
+     <div class="pics" style="width:min(360px,90vw)">${pics.map(p => `<button data-p="${p}">${p}</button>`).join('')}</div>
+     <button class="btn ghost" id="cancel" style="max-width:320px;color:#fff">Cancel</button>`);
+    document.querySelectorAll('[data-p]').forEach(b => b.onclick = () => { if (b.dataset.p === answer) done(); else { b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad'); } });
+  } else {
+    showOverlay(`<h2 style="font-size:30px">Elf password</h2><p style="opacity:.85">Type the word on the host's screen.</p>
+     <input class="field" id="pw" style="max-width:340px" autocomplete="off" autocapitalize="characters" spellcheck="false">
+     <button class="btn gold" id="pwgo" style="max-width:340px">Unlock</button>
+     <button class="btn ghost" id="cancel" style="max-width:340px;color:#fff">Cancel</button>`);
+    const inp = document.getElementById('pw'); inp.focus();
+    const tryIt = () => { if (inp.value.trim().toUpperCase() === answer) done(); else { inp.classList.remove('bad'); void inp.offsetWidth; inp.style.animation = 'shake .3s'; setTimeout(() => inp.style.animation = '', 320); toast('Not quite. Check the host\'s screen.'); } };
+    document.getElementById('pwgo').onclick = tryIt;
+    inp.onkeydown = e => { if (e.key === 'Enter') tryIt(); };
+  }
+  document.getElementById('cancel').onclick = () => closeOverlay();
+}
+
+function roundHTML(G, me, stage, st) {
+  const game = G.game, fam = G.setup.mode === 'f';
+  const T = W.BY_ID[game.chars[game.thief]];
+  let html = '';
+  for (let r = stage - 1; r >= 0; r--) {
+    const trait = game.order[r], val = T[trait];
+    const ev = W.EVIDENCE[trait][val];
+    const emoji = trait === 'loc' ? W.LOC[val].emoji : trait === 'feet' ? W.FEET[val].emoji : W.POCKET[val].emoji;
+    const beat = W.STORY.beats[r];
+    html += `
+    ${r === stage - 1 ? `<div class="stage"><span class="time">${beat.time}</span><h2>Round ${r + 1}: ${beat.title}</h2><p class="beat">${esc(beat.text)}</p></div>` : `<h3 style="margin:22px 0 0;color:var(--gold)">Round ${r + 1} clues</h3>`}
+    <div class="card evidence"><span class="stamp">Evidence ${r + 1}</span>
+      ${fam || r < stage - 1 ? `<span class="e">${emoji}</span>` : `<span class="e">❓</span>`}
+      <p>${esc(fam ? ev.f : ev.g)}</p>
+      ${!fam && r === stage - 1 ? `<p class="mut small" style="font-weight:700">Work out what this clue means together.</p>` : ''}
+    </div>
+    <div class="card"><h3 style="margin-top:0">👀 Your witness tip</h3><p style="margin:0">${esc(W.tipText(game, r, me, G.names))}</p>
+      ${me === game.thief && r === stage - 1 ? `<p class="small mut">You're the thief, so you can share this tip or keep it to yourself.</p>` : ''}</div>`;
+  }
+  return html;
+}
+
+function notesHTML(G, me, st, stage) {
+  const game = G.game;
+  const found = [];
+  const T = W.BY_ID[game.chars[game.thief]];
+  for (let r = 0; r < Math.min(stage, 3); r++) {
+    const tr = game.order[r];
+    found.push(tr === 'loc' ? W.LOC[T.loc].emoji + ' ' + W.LOC[T.loc].name : tr === 'feet' ? W.FEET[T.feet].emoji + ' ' + cap(W.FEET[T.feet].name) : W.POCKET[T.pocket].emoji + ' ' + W.POCKET[T.pocket].short);
+  }
+  const fam = G.setup.mode === 'f';
+  return `<div class="card"><h2>Suspects</h2>
+   <p class="mut small">Ask people where they were, what's on their feet and what's in their pocket. Tap "Not them" to cross someone off.</p>
+   ${stage > 0 && fam ? `<div><b>What we know about the thief:</b><div class="found">${found.map(f => `<span>${esc(f)}</span>`).join('')}</div></div>` : ''}
+   ${stage > 0 && !fam ? `<p class="small"><b>Tip:</b> solve each round's riddle to work out what the thief has.</p>` : ''}
+   ${game.chars.map((id, i) => { const c = W.BY_ID[id]; const out = st.out.includes(i); return `<div class="sus ${out ? 'out' : ''}"><span class="em">${c.emoji}</span><span class="nm">${esc(c.name)}${i === me ? ' (you)' : ''}<small>${esc(c.job)} · played by ${esc(playerLabel(G, i))}</small></span>${i === me ? '' : `<button data-out="${i}">${out ? 'Undo' : 'Not them'}</button>`}</div>`; }).join('')}
+  </div>`;
+}
+
+function accuseHTML(G, me, st) {
+  const game = G.game, beat = W.STORY.beats[3];
+  return `<div class="stage"><span class="time">${beat.time}</span><h2>${beat.title}</h2><p class="beat">${esc(beat.text)}</p></div>
+  <div class="card"><h2>Who took Santa?</h2><p class="mut small">Pick in secret. Then everyone shows their phone on the count of three.</p>
+  ${game.chars.map((id, i) => { const c = W.BY_ID[id]; return i === me ? '' : `<button class="pick" data-vote="${i}" style="${st.vote === i ? 'box-shadow:inset 0 0 0 3px var(--red);background:#fff3f4' : ''}"><span class="em">${c.emoji}</span><span>${esc(c.name)}<br><small class="mut">${esc(playerLabel(G, i))}</small></span></button>`; }).join('')}
+  <button class="btn" id="lock" ${st.vote === null || st.vote === undefined ? 'disabled' : ''}>Lock in my accusation</button></div>`;
+}
+
+function revealHTML(G, me, st) {
+  const game = G.game, T = W.BY_ID[game.chars[game.thief]], beat = W.STORY.beats[4];
+  if (me === game.thief && !st.revealed) {
+    return `<div class="stage"><span class="time">${beat.time}</span><h2>Stand up!</h2><p class="beat">${esc(beat.text)}</p></div>
+    <div class="thief"><h3>Read this out loud:</h3>
+    <p style="font-size:22px;font-weight:800">"It was me! I'm ${esc(T.name)}, and I took Santa. ${esc(cap(T.why))}. He's been ${esc(T.hide)} this whole time!"</p></div>
+    <button class="btn gold" id="doreveal">I've confessed. Show the ending</button>`;
+  }
+  if (me !== game.thief && !st.revealed) {
+    return `<div class="stage"><span class="time">${beat.time}</span><h2>Drumroll...</h2><p class="beat">${esc(beat.text)}</p></div>
+    <div class="card center"><p style="font-size:20px;font-weight:800">Wait for the thief to stand up and confess.</p><p class="mut">Then tap below.</p></div>
+    <button class="btn gold" id="doreveal">🎁 Reveal the thief</button>`;
+  }
+  const right = st.vote === game.thief;
+  return `<div class="card center"><div style="font-size:64px">${T.emoji}</div>
+    <h2>It was ${esc(T.name)}!</h2><p style="margin:0" class="mut">played by ${esc(playerLabel(G, game.thief))}</p>
+    <p><i>"${esc(cap(T.why))}."</i></p><p>Santa was ${esc(T.hide)}.</p>
+    ${me === game.thief ? '<p><b>You were the thief!</b> Did you fool them?</p>' : st.vote === null || st.vote === undefined ? '' : right ? '<div class="note"><b>🏅 Top Detective!</b> You picked the right suspect.</div>' : '<div class="note"><b>Fooled you!</b> The thief got past you this time.</div>'}
+    <p><i>${esc(W.STORY.ending)}</i></p></div>
+  ${closedHTML(G, null)}
+  <p class="center small" style="opacity:.8">Screenshot your Case Closed card to remember this Christmas.</p>`;
+}
+
+function closedHTML(G, win) {
+  const game = G.game, T = W.BY_ID[game.chars[game.thief]];
+  const d = new Date();
+  const date = d.toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+  return `<div class="closed"><span class="stamp">Case Closed</span>
+   <h2>The Case of the Stolen Santa</h2><div style="opacity:.8">${esc(date)}</div>
+   <p style="font-size:18px;margin:12px 0 0">The thief: <b>${esc(T.name)}</b> (${esc(playerLabel(G, game.thief))})</p>
+   ${win === null ? '' : `<p style="margin:4px 0 0;font-weight:800">${win ? 'Caught by the detectives!' : 'The thief got away!'}</p>`}
+   <ul>${game.chars.map((id, i) => `<li>${W.BY_ID[id].emoji} ${esc(playerLabel(G, i))} as ${esc(W.BY_ID[id].name)}</li>`).join('')}</ul>
+   <div style="opacity:.75;font-size:13px;font-weight:800;letter-spacing:.1em">WHO STOLE SANTA? · LITTLE TRADITIONS CO.</div></div>`;
+}
+
+/* ---------- helpers ---------- */
+function bind() {
+  $app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+  const r = document.getElementById('resume');
+  if (r) r.onclick = () => {
+    const last = store.get('wss-last', null); const setup = W.decode(last.code);
+    S.G = loadGame(last.code, setup, null);
+    history.replaceState(null, '', linkFor(last.code, S.G.names));
+    go(last.role === 'host' ? 'host' : 'who');
+  };
+  const pe = document.getElementById('playend');
+  if (pe) pe.onclick = () => Narrator.beat(W.STORY.ending, true);
+}
+function drawQR(el, text) {
+  try {
+    const qr = qrcode(0, 'M'); qr.addData(text); qr.make();
+    el.innerHTML = qr.createSvgTag({ cellSize: 6, margin: 2, scalable: true });
+  } catch (e) { el.innerHTML = '<p class="mut small">QR code unavailable. Use the game code below.</p>'; }
+}
+function copyText(t) {
+  const ok = () => toast('Link copied');
+  if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, () => fallbackCopy(t));
+  else fallbackCopy(t);
+}
+function fallbackCopy(t) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('Link copied'); } catch (e) {} ta.remove(); }
+
+/* ================= SOUND: warm narrator + music box ================= */
+let AC = null;
+function ac() { if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (C) AC = new C(); } if (AC && AC.state === 'suspended') AC.resume(); return AC; }
+function chime() {
+  const a = ac(); if (!a) return;
+  [1318.5, 1760, 2093].forEach((f, i) => bell(a, f, a.currentTime + i * 0.09, 0.08, 1.2));
+}
+function bell(a, f, t, vol, dur) {
+  const g = a.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  g.connect(Music.out || a.destination);
+  [1, 2.01, 3.98].forEach((m, k) => { const o = a.createOscillator(); o.type = 'sine'; o.frequency.value = f * m; const og = a.createGain(); og.gain.value = [1, .35, .12][k]; o.connect(og); og.connect(g); o.start(t); o.stop(t + dur + .05); });
+}
+const Music = {
+  out: null, timer: null, playing: false,
+  // Silent Night (Franz Gruber, 1818, public domain): [midi, beats]
+  tune: [[67,1.5],[69,.5],[67,1],[64,3],[67,1.5],[69,.5],[67,1],[64,3],[74,2],[74,1],[71,3],[72,2],[72,1],[67,3],
+         [69,2],[69,1],[72,1.5],[71,.5],[69,1],[67,1.5],[69,.5],[67,1],[64,3],[69,2],[69,1],[72,1.5],[71,.5],[69,1],
+         [67,1.5],[69,.5],[67,1],[64,3],[74,2],[74,1],[77,1.5],[74,.5],[71,1],[72,3],[76,3],[72,1],[67,1],[64,1],[67,1.5],[65,.5],[62,1],[60,6]],
+  start(vol) {
+    const a = ac(); if (!a || this.playing) return;
+    this.out = a.createGain(); this.out.gain.value = 0; this.out.connect(a.destination);
+    this.out.gain.linearRampToValueAtTime(vol || 0.22, a.currentTime + 2);
+    this.playing = true;
+    const beat = 0.62; let t = a.currentTime + 0.3;
+    const loop = () => {
+      if (!this.playing) return;
+      this.tune.forEach(([m, b]) => { const f = 440 * Math.pow(2, (m - 69) / 12); bell(a, f, t, 0.12, Math.min(2.4, b * beat + 1)); t += b * beat; });
+      t += beat * 3;
+      this.timer = setTimeout(loop, (t - a.currentTime - 4) * 1000);
+    };
+    loop();
+  },
+  duck(v) { if (this.out && AC) this.out.gain.linearRampToValueAtTime(v, AC.currentTime + 0.6); },
+  stop() {
+    this.playing = false; clearTimeout(this.timer);
+    if (this.out && AC) { const o = this.out; o.gain.cancelScheduledValues(AC.currentTime); o.gain.setValueAtTime(o.gain.value, AC.currentTime); o.gain.linearRampToValueAtTime(0, AC.currentTime + 1.2); setTimeout(() => { try { o.disconnect(); } catch (e) {} }, 1400); }
+    this.out = null;
+  }
+};
+const Ambience = {
+  nodes: [],
+  sleighBells() {
+    const a = ac(); if (!a) return;
+    const t0 = a.currentTime;
+    for (let i = 0; i < 26; i++) {
+      const t = t0 + i * 0.16 + Math.random() * 0.04;
+      const env = Math.sin(Math.PI * i / 26);
+      [2637, 3136, 3520].forEach(f => bell(a, f * (0.98 + Math.random() * 0.04), t, 0.025 * env + 0.004, 0.35));
+    }
+  },
+  fire(seconds) {
+    const a = ac(); if (!a) return;
+    const len = a.sampleRate * seconds, buf = a.createBuffer(1, len, a.sampleRate), d = buf.getChannelData(0);
+    let b = 0;
+    for (let i = 0; i < len; i++) { b = 0.97 * b + 0.03 * (Math.random() * 2 - 1); d[i] = b * 0.6 + (Math.random() < 0.0006 ? (Math.random() * 2 - 1) * 0.9 : 0); }
+    const src = a.createBufferSource(); src.buffer = buf;
+    const g = a.createGain(); g.gain.value = 0; g.gain.linearRampToValueAtTime(0.35, a.currentTime + 1.5); g.gain.linearRampToValueAtTime(0, a.currentTime + seconds);
+    const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1400;
+    src.connect(lp); lp.connect(g); g.connect(a.destination); src.start();
+    this.nodes.push(src);
+  },
+  stop() { this.nodes.forEach(n => { try { n.stop(); } catch (e) {} }); this.nodes = []; }
+};
+const Narrator = {
+  token: 0,
+  voice() {
+    if (!('speechSynthesis' in window)) return null;
+    const vs = speechSynthesis.getVoices().filter(v => /^en(-|_|$)/i.test(v.lang));
+    if (!vs.length) return null;
+    const prefer = [/premium/i, /enhanced/i, /natural/i, /neural/i, /\bAva\b/, /Samantha/, /Allison/, /Moira/, /Serena/, /Karen/, /Susan/,
+                    /Google UK English Female/, /Google US English/, /Aria/, /Jenny/, /Libby/, /Sonia/];
+    for (const p of prefer) { const v = vs.find(x => p.test(x.name)); if (v) return v; }
+    return vs.find(v => /en-US/i.test(v.lang)) || vs[0];
+  },
+  say(text, onStart) {
+    return new Promise(res => {
+      if (!('speechSynthesis' in window)) { setTimeout(res, Math.max(2500, text.length * 55)); return; }
+      const u = new SpeechSynthesisUtterance(text);
+      const v = this.voice(); if (v) { u.voice = v; u.lang = v.lang; }
+      u.rate = 0.88; u.pitch = 1.02; u.volume = 1;
+      let done = false; const fin = () => { if (!done) { done = true; res(); } };
+      u.onend = fin; u.onerror = fin;
+      setTimeout(fin, 4000 + text.length * 120);
+      if (onStart) onStart();
+      speechSynthesis.speak(u);
+    });
+  },
+  wait(ms) { return new Promise(r => setTimeout(r, ms)); },
+  unlock() { // iOS needs speech to start inside the tap
+    if (!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(' '); u.volume = 0; speechSynthesis.speak(u);
+  },
+  async story(lines, onLine, onDone) {
+    const my = ++this.token;
+    this.unlock();
+    Music.start(0.2); Ambience.fire(16); Ambience.sleighBells();
+    await this.wait(2600);
+    for (const line of lines) {
+      if (my !== this.token) return;
+      onLine(line); Music.duck(0.1);
+      await this.say(line);
+      if (my !== this.token) return;
+      Music.duck(0.2);
+      if (line === 'The armchair is empty.' || line === 'Santa is gone.') { Music.duck(0.04); await this.wait(1600); }
+      else await this.wait(750);
+    }
+    if (my !== this.token) return;
+    Ambience.sleighBells(); await this.wait(3500); Music.stop(); onDone && onDone();
+  },
+  async beat(text, withMusic) {
+    const my = ++this.token;
+    this.unlock();
+    Music.start(0.12); Ambience.sleighBells();
+    await this.wait(1200);
+    if (my !== this.token) return;
+    Music.duck(0.07);
+    await this.say(text);
+    if (my !== this.token) return;
+    Music.duck(0.16); await this.wait(2500); if (my === this.token) Music.stop();
+  },
+  stop() { this.token++; if ('speechSynthesis' in window) speechSynthesis.cancel(); Music.stop(); Ambience.stop(); }
+};
+if ('speechSynthesis' in window) { speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices(); }
+
+/* ---------- start ---------- */
+(function init() {
+  const h = readHash();
+  if (h) {
+    S.G = loadGame(h.code, h.setup, h.names);
+    const last = store.get('wss-last', null);
+    const isHost = !!store.get('wss-host-' + h.code, null);
+    store.set('wss-last', { code: h.code, role: isHost ? 'host' : 'player' });
+    S.view = isHost ? 'host' : 'who';
+  }
+  render();
+})();
+</script>
+</body>
+</html>
