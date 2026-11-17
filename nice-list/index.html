@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#143128">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Nice List">
+<title>The Nice List · Little Traditions</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect fill='%23143128' width='32' height='32' rx='6'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23e7d3a1' stroke-width='1.4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm and specific, the way a parent writes. Never babyish, never corporate.
+   IDEA: a clothbound ledger opens on a phone, finds one child, and stamps the page.
+   PICTURE: evergreen cloth, cream laid paper, cranberry wax, one gold line.
+   COLOUR & TYPE: deep evergreen, cranberry, warm cream, antique gold.
+     Fraunces + Outfit. Quiet-luxury heirloom Christmas (2026), not cartoon foil.
+   LAYOUT: one vertical stage so a phone video holds the whole moment. */
+:root{
+  --eve:#143128;--eve-deep:#0e221c;--eve-mid:#1d4638;
+  --cream:#f4efe6;--paper:#f7f3ea;--card:#fbf8f3;
+  --ink:#241816;--muted:#5c4a42;--line:#e3d5c4;
+  --cran:#a3182f;--wax:#8e2f3a;
+  --gold:#6f5424;--foil:#d4bc8a;--foil-2:#f3e6c8;
+  --serif:"Fraunces","Iowan Old Style",Palatino,Georgia,serif;
+  --sans:Outfit,Inter,"Avenir Next",system-ui,sans-serif;
+}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;padding:0}
+html{color-scheme:light}
+body{
+  margin:0;min-height:100dvh;color:var(--cream);
+  font:16px/1.5 var(--sans);background:var(--eve-deep);
+  overflow-x:clip;-webkit-tap-highlight-color:transparent;
+}
+body.paper{background:var(--cream);color:var(--ink)}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;touch-action:manipulation}
+:focus-visible{outline:3px solid var(--foil);outline-offset:3px}
+body.paper :focus-visible{outline-color:var(--eve)}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+#app{position:relative;z-index:1}
+.frame{width:min(480px,100%);margin:0 auto;min-height:100dvh;position:relative;
+  padding:max(16px,env(safe-area-inset-top)) 18px max(22px,env(safe-area-inset-bottom));
+}
+.stage{background:
+  radial-gradient(90% 55% at 50% 38%, #245443 0%, var(--eve) 58%, var(--eve-deep) 100%);
+}
+body.paper .frame{padding-top:0}
+
+/* setup */
+.band{background:var(--eve);color:var(--cream);padding:26px 22px 22px;margin:0 -18px 8px;
+  text-align:center;background-image:radial-gradient(80% 80% at 50% 0%, #1d4638, transparent 70%);}
+.brand{margin:0;letter-spacing:.22em;text-transform:uppercase;font-size:11px;font-weight:600;color:var(--foil)}
+.tag{margin:6px 0 0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:15px;color:var(--foil-2)}
+.setup{padding-bottom:28px}
+.setup h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,8vw,42px);line-height:1.08;letter-spacing:-.02em;margin:18px 0 8px}
+.lede{margin:0 0 8px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 16px 18px;margin:14px 0;
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset}
+.card h2{margin:0;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--eve)}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+label,legend{font-weight:600;font-size:15px}
+.opt{font-weight:500;color:var(--muted)}
+.hint{margin:6px 0 0;color:var(--muted);font-size:14px}
+input[type=text]{width:100%;min-height:48px;margin-top:6px;padding:10px 12px;border-radius:12px;
+  border:1.5px solid #d9cbb8;background:#fff;color:var(--ink);font-size:16px}
+fieldset{border:0;margin:14px 0 0;padding:0}
+.segs{display:flex;gap:8px;margin-top:8px}
+.seg{flex:1;min-height:44px;border-radius:999px;border:1.5px solid #d9cbb8;background:#fff;font-weight:600}
+.seg[aria-pressed=true]{background:var(--eve);color:var(--cream);border-color:var(--eve)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{min-height:44px;padding:8px 12px;border-radius:999px;border:1.5px solid #d9cbb8;background:#fff;font-weight:500;font-size:15px;text-align:left}
+.chip[aria-pressed=true]{background:var(--eve);color:var(--cream);border-color:var(--eve)}
+.addrow{display:flex;gap:8px;margin-top:8px}
+.addrow input{flex:1;margin-top:0}
+.chosen{list-style:none;margin:12px 0 0;padding:0}
+.chosen li{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--line)}
+.chosen li span{flex:1}
+.chosen button{min-height:44px;padding:0 8px;color:var(--cran);font-weight:600;font-size:14px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;padding:12px 16px;
+  border-radius:14px;background:var(--cran);color:#fff;font-weight:600;font-size:17px;margin-top:10px}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn.text{background:transparent;color:var(--foil-2);min-height:44px;font-size:15px;width:auto;margin:8px auto 0}
+.btn.slim{min-height:48px;font-size:16px}
+.btn[aria-disabled=true]{background:#e4d5c8;color:#5c4a42}
+.linkish{display:inline-block;margin-top:14px;color:var(--eve);font-weight:600;text-underline-offset:3px}
+.note{min-height:1.3em;color:var(--cran);font-weight:600;font-size:14px;margin:8px 0 0}
+.ghost-link{color:var(--muted);font-weight:600;min-height:44px;text-decoration:underline;text-underline-offset:3px}
+.danger{color:var(--cran);font-weight:600;min-height:48px;margin-top:8px}
+
+/* ceremony */
+.top{text-align:center;padding-top:6px}
+.top .brand{color:var(--foil)}
+.top .tag{color:var(--foil-2)}
+.banner{margin:12px auto 0;max-width:34em;text-align:center;font-size:13px;letter-spacing:.04em;
+  color:var(--foil-2);border:1px solid rgba(212,188,138,.45);border-radius:999px;padding:6px 12px}
+.picker{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 4px}
+.namepick{min-height:44px;padding:8px 16px;border-radius:999px;color:var(--cream);
+  box-shadow:inset 0 0 0 1.5px rgba(243,230,200,.55);font-weight:600}
+.namepick[aria-checked=true]{background:var(--cream);color:var(--eve);box-shadow:none}
+.ask{text-align:center;margin:14px 0 0;color:var(--foil-2);font-size:14px;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.bookwrap{display:flex;justify-content:center;margin:16px 0 8px}
+.book{position:relative;width:min(78vw,340px);aspect-ratio:3/4.35;filter:drop-shadow(0 22px 28px rgba(0,0,0,.38))}
+.frame.playing .book,.frame.revealed .book{width:min(88vw,380px)}
+.spread,.cover{position:absolute;inset:0;border-radius:3px 16px 16px 3px;overflow:hidden}
+.spread{background:
+  linear-gradient(90deg, rgba(20,40,32,.10), transparent 16px),
+  repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(36,24,22,.05) 28px),
+  var(--paper);
+  color:var(--ink);box-shadow:inset 0 0 0 1px rgba(176,137,72,.45)}
+.cover{z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:
+    radial-gradient(120% 70% at 20% 0%, rgba(255,255,255,.16), transparent 42%),
+    linear-gradient(165deg, #245443, var(--eve) 46%, #10281f);
+  box-shadow:inset 0 0 0 1px rgba(212,188,138,.55), inset 12px 0 18px rgba(0,0,0,.18);
+  color:var(--foil-2)}
+.cover .frame-line{position:absolute;inset:14px;border:1px solid rgba(212,188,138,.45);border-radius:2px 10px 10px 2px;pointer-events:none}
+.ribbon{position:absolute;top:0;bottom:0;right:34px;width:16px;
+  background:linear-gradient(90deg,#6e1f2c,#c4374a 42%,#6e1f2c)}
+.ribbon::after{content:"";position:absolute;left:-7px;bottom:0;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:22px solid #c4374a}
+.cover .k{margin:0 0 10px;letter-spacing:.28em;text-transform:uppercase;font-size:11px;font-weight:600;color:var(--foil)}
+.cover h1{margin:0;font-family:var(--serif);font-weight:500;font-size:clamp(46px,13vw,62px);line-height:.92;letter-spacing:-.03em;
+  background:linear-gradient(#f8efd8,#e2c98a 48%,#a6843d);-webkit-background-clip:text;background-clip:text;color:transparent}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){.cover h1{color:var(--foil-2)}}
+.cover .yr{margin:14px 0 0;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--foil)}
+.diamond{width:7px;height:7px;margin:16px auto 0;background:var(--foil);transform:rotate(45deg)}
+.book.open .cover{animation:openwipe 1.05s cubic-bezier(.4,.05,.2,1) forwards;pointer-events:none}
+@keyframes openwipe{0%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 100%)}}
+.book.open .spread{animation:glow 1.15s ease}
+@keyframes glow{0%{filter:brightness(.78)}40%{filter:brightness(1.05)}100%{filter:brightness(1)}}
+.kicker{position:absolute;top:18px;left:20px;right:20px;margin:0;text-align:center;letter-spacing:.18em;text-transform:uppercase;font-size:11px;font-weight:600;color:var(--gold)}
+.scan{position:absolute;left:22px;right:22px;top:52px;bottom:28px}
+.scan ul{list-style:none;margin:0;padding:0}
+.scan li{font-family:var(--serif);font-style:italic;font-weight:500;font-size:22px;color:#5c4a42;padding:9px 2px;border-bottom:1px solid rgba(36,24,22,.08)}
+.scanbar{position:absolute;left:-6px;right:-6px;top:0;height:42px;pointer-events:none;
+  background:linear-gradient(180deg, transparent, rgba(176,137,72,.35), transparent);
+  box-shadow:0 1px 0 rgba(166,132,61,.85);transform:translateY(0)}
+.book.found .scan li{opacity:.28;transition:opacity .4s}
+.book.found .scan li.target{opacity:1;color:var(--eve);font-style:normal;font-weight:600;font-size:30px;letter-spacing:-.02em}
+.entry{position:absolute;left:22px;right:22px;top:54px;bottom:128px;text-align:center;opacity:0}
+.book.reading .scan{opacity:0;transition:opacity .45s}
+.book.reading .entry,.book.done .entry{opacity:1;transition:opacity .5s}
+.entry h2{margin:6px 0 0;font-family:var(--serif);font-weight:500;font-size:clamp(34px,9vw,46px);line-height:1.02;letter-spacing:-.03em;color:var(--eve)}
+.entry h2::after{content:"";display:block;width:64px;height:1px;margin:10px auto 0;background:#b08948;transform:scaleX(0);transform-origin:center}
+.book.reading .entry h2::after{animation:draw .55s .15s ease forwards}
+@keyframes draw{to{transform:scaleX(1)}}
+.entry .says{margin:12px 0 8px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+.entry p.deed{margin:0 0 8px;font-family:var(--serif);font-style:italic;font-weight:500;font-size:18px;line-height:1.35;opacity:0;transform:translateY(6px)}
+.entry p.deed.show{animation:rise .55s ease forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.elf{position:absolute;left:22px;bottom:28px;margin:0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--gold);opacity:0}
+.book.stamping .elf,.book.done .elf{opacity:1;transition:opacity .45s .25s}
+.seal{position:absolute;right:16px;bottom:16px;width:108px;height:108px;opacity:0;z-index:2}
+.book.stamping .seal{animation:press .78s cubic-bezier(.2,.75,.2,1) forwards}
+.book.done .seal{opacity:1;transform:rotate(-8deg);filter:drop-shadow(0 8px 6px rgba(60,16,24,.28))}
+@keyframes press{
+  0%{opacity:0;transform:translateY(-120px) rotate(-16deg) scale(1.12)}
+  62%{opacity:1;transform:translateY(5px) rotate(-8deg) scale(1,.92)}
+  100%{opacity:1;transform:translateY(0) rotate(-8deg) scale(1)}
+}
+.seal svg{display:block;width:100%;height:100%;overflow:visible}
+.actions{text-align:center}
+.fine{text-align:center;margin:8px 0 0}
+.fine button,.skip{color:var(--foil-2);font-weight:600;min-height:44px;padding:8px 12px;text-decoration:underline;text-underline-offset:3px}
+.fine.links{display:flex;flex-wrap:wrap;gap:2px 16px;justify-content:center;margin-top:4px}
+.skip{position:absolute;top:max(8px,env(safe-area-inset-top));right:8px;z-index:5;background:transparent}
+.frame.playing .top,.frame.playing .banner,.frame.playing .picker,.frame.playing .ask,.frame.playing .actions,.frame.playing .fine{visibility:hidden}
+.frame.playing{display:flex;flex-direction:column;justify-content:center}
+.frame.playing .bookwrap{margin:0}
+.wait{text-align:center;color:var(--foil-2);margin-top:8px}
+
+/* keepsake */
+.certwrap{margin:12px auto 0;width:min(100%,400px)}
+.cert{background:var(--paper);color:var(--ink);text-align:center;padding:32px 22px 26px;position:relative;
+  box-shadow:0 18px 40px rgba(0,0,0,.28)}
+.cert::before{content:"";position:absolute;inset:12px;border:1px solid var(--eve);pointer-events:none}
+.cert::after{content:"";position:absolute;inset:16px;border:1px solid rgba(176,137,72,.85);pointer-events:none}
+.cert .ey{margin:8px 0 0;letter-spacing:.22em;text-transform:uppercase;font-size:11px;font-weight:600;color:var(--eve)}
+.cert .motto{margin:6px 0 0;font-family:var(--serif);font-style:italic;color:var(--gold);font-size:15px}
+.cert .listname{margin:22px 0 0;letter-spacing:.2em;text-transform:uppercase;font-size:12px;font-weight:600;color:var(--gold)}
+.cert .season{margin:6px 0 0;font-family:var(--serif);font-style:italic;font-size:20px}
+.cert h2{margin:18px 0 0;font-family:var(--serif);font-weight:500;font-size:clamp(40px,11vw,54px);line-height:1.02;letter-spacing:-.03em;color:var(--eve)}
+.cert .sub{margin:8px 0 0;font-weight:500}
+.rule{width:72px;height:1px;margin:16px auto;background:#b08948;border:0}
+.cert .deed{margin:0 0 8px;font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.35}
+.cert .seal{position:relative;right:auto;bottom:auto;width:118px;height:118px;margin:8px auto 0;opacity:1;transform:rotate(-8deg);filter:drop-shadow(0 8px 6px rgba(60,16,24,.22))}
+.cert .when{margin:8px 0 0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+.years{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:center;align-items:baseline;margin:18px 0 0;padding:0 8px}
+.years .lab{letter-spacing:.18em;text-transform:uppercase;font-size:11px;font-weight:600;color:var(--gold)}
+.years b{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--eve)}
+.years i{font-style:normal;color:var(--cran)}
+.cert .foot{margin:16px 0 4px;font-size:12px;color:var(--muted)}
+.cert img{display:block;width:100%;height:auto}
+.row2{display:flex;gap:8px}
+.row2 .btn{flex:1;margin-top:8px}
+.msg{min-height:1.2em;text-align:center;color:var(--foil-2);font-size:14px;margin:8px 0 0}
+
+/* sheet */
+.mod{position:fixed;inset:0;z-index:20;background:rgba(8,16,12,.62);display:grid;place-items:end center}
+.mod[hidden]{display:none}
+.sheet{background:var(--paper);color:var(--ink);width:min(520px,100%);max-height:min(88dvh,720px);overflow:auto;
+  border-radius:20px 20px 0 0;padding:22px 18px max(22px,env(safe-area-inset-bottom))}
+@media(min-width:700px){.mod{place-items:center}.sheet{border-radius:20px}}
+.sheet h2{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.1;margin:0 0 8px;color:var(--eve)}
+.sheet p{margin:0 0 8px;color:var(--muted)}
+.sheet ol{margin:8px 0 12px;padding-left:20px}
+.sheet li{margin:6px 0}
+.past{margin-top:8px;font-size:14px;color:var(--muted)}
+
+@media(prefers-reduced-motion:reduce){
+  .book.open .cover,.book.open .spread,.entry h2::after,.entry p.deed,.book.stamping .seal,.scanbar{animation:none!important;transition:none!important}
+  .book.open .cover{opacity:0;clip-path:inset(0 0 0 100%)}
+  .entry p.deed,.entry h2::after{opacity:1;transform:none}
+  .book.done .seal,.book.stamping .seal{opacity:1;transform:rotate(-8deg)}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div id="live" class="sr" aria-live="polite"></div>
+<main id="app"></main>
+<div class="mod" id="mod" hidden>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" tabindex="-1"></div>
+</div>
+<script>
+'use strict';
+const KEY = 'ltc-nice-list-v1';
+const SUGGESTIONS = [
+  'helped a sibling','fed the pet','shared toys','used kind words','told the truth',
+  'cleaned up without being asked','helped make dinner','was gentle with a friend',
+  'waited patiently','made someone smile','tried again when it was hard','helped a grown-up',
+  'took care of a plant','wrote a sweet note','included someone'
+];
+const DECOYS = ['Hana','Mateo','Priya','Elias','Amara','Jonah','Leila','Theo','Noor','Silas','Willa','Omar','Freya','August','Mina','Ida','Felix','Aya'];
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let demo = false;
+let family = null;
+let draft = null;
+let editing = false;
+let view = 'setup';
+let activeId = null;
+let playing = false;
+let timers = [];
+let lastFocus = null;
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const yearNow = () => new Date().getFullYear();
+const todayISO = () => {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+};
+function prettyDate(iso){
+  if (!iso) return '';
+  const [y,m,d] = iso.split('-').map(Number);
+  return new Date(y, m-1, d).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+}
+function uid(){ return 'k' + Math.random().toString(36).slice(2, 8); }
+function blankKid(){ return {id:uid(), name:'', pronoun:'', deeds:[], custom:''}; }
+function load(){
+  try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; }
+}
+function save(){
+  if (demo) return;
+  try { localStorage.setItem(KEY, JSON.stringify(family)); } catch (e) {}
+}
+function announce(t){ const n = $('#live'); if (n) n.textContent = t || ''; }
+function later(fn, ms){ const id = setTimeout(fn, ms); timers.push(id); return id; }
+function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+const snd = {
+  ctx: null,
+  init(){
+    if (!family || !family.sound) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    try { this.ctx = this.ctx || new AC(); this.ctx.resume && this.ctx.resume(); } catch (e) {}
+  },
+  tone(freq, when, dur, type, vol){
+    if (!this.ctx || !family || !family.sound) return;
+    try {
+      const t = this.ctx.currentTime + (when || 0);
+      const o = this.ctx.createOscillator();
+      const g = this.ctx.createGain();
+      o.type = type || 'sine';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol || 0.05, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(this.ctx.destination);
+      o.start(t); o.stop(t + dur + 0.02);
+    } catch (e) {}
+  },
+  open(){ this.tone(392, 0, .45, 'sine', .035); this.tone(523, .1, .55, 'sine', .04); },
+  found(){ this.tone(523, 0, .5, 'sine', .05); this.tone(659, .12, .55, 'sine', .045); this.tone(784, .24, .7, 'sine', .035); },
+  line(){ this.tone(698, 0, .16, 'triangle', .025); },
+  stamp(){ this.tone(98, 0, .22, 'sine', .07); this.tone(880, .06, .4, 'sine', .04); },
+  on(){ this.tone(523, 0, .28, 'sine', .04); this.tone(659, .1, .36, 'sine', .035); }
+};
+
+function entryOf(kid, y){
+  if (!kid || !kid.entries) return null;
+  return kid.entries[String(y)] || null;
+}
+function yearsOf(kid){
+  return Object.keys(kid.entries || {}).map(Number).filter(n => !isNaN(n)).sort((a,b) => a-b);
+}
+function kidById(id){ return (family && family.kids || []).find(k => k.id === id) || null; }
+function subject(kid){
+  if (kid.pronoun === 'she') return 'She';
+  if (kid.pronoun === 'he') return 'He';
+  if (kid.pronoun === 'they') return 'They';
+  return (kid.name || '').trim();
+}
+function deedSentence(kid, deed){
+  let d = String(deed || '').trim().replace(/\s+/g, ' ');
+  if (!d) return '';
+  const name = (kid.name || '').trim();
+  const own = /^(she|he|they|i)\b/i.test(d) || (name && d.toLowerCase().startsWith(name.toLowerCase() + ' '));
+  if (own) {
+    if (!/[.!?]$/.test(d)) d += '.';
+    return d.charAt(0).toUpperCase() + d.slice(1);
+  }
+  d = d.charAt(0).toLowerCase() + d.slice(1).replace(/[.!?]+$/, '');
+  return subject(kid) + ' ' + d + '.';
+}
+function sentences(kid, y){
+  const e = entryOf(kid, y);
+  if (!e) return [];
+  return e.deeds.map(d => deedSentence(kid, d)).filter(Boolean);
+}
+function keepsakeAlt(kid){
+  const ys = yearsOf(kid);
+  const extra = ys.length ? ' Nice List ' + ys.join(', ') + '.' : '';
+  return reading(kid, yearNow()) + extra;
+}
+function reading(kid, y){
+  const lines = sentences(kid, y);
+  return kid.name + ' is on the Nice List for Christmas ' + y + '. ' + lines.join(' ') + ' The seal says nice.';
+}
+function decoysFor(name){
+  const blocked = new Set((family && family.kids || []).map(k => String(k.name || '').trim().toLowerCase()));
+  blocked.add(String(name || '').trim().toLowerCase());
+  const pool = DECOYS.filter(d => !blocked.has(d.toLowerCase()));
+  let seed = 7;
+  for (const ch of String(name)) seed = (seed * 33 + ch.charCodeAt(0)) >>> 0;
+  const arr = pool.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    const j = seed % (i + 1);
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  const out = arr.slice(0, 7);
+  while (out.length < 7) out.push('· · ·');
+  return out;
+}
+function sealSVG(){
+  return `<svg viewBox="0 0 120 120" aria-hidden="true">
+    <defs><filter id="wax" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter></defs>
+    <path filter="url(#wax)" fill="#8e2f3a" d="M60 6c12 0 22 4 31 12 10 9 17 20 19 34 2 14-2 28-11 39-9 11-20 21-35 23-14 2-28-3-39-12-12-10-19-23-21-38-2-15 4-30 14-41C29 12 44 6 60 6z"/>
+    <circle cx="60" cy="62" r="36" fill="none" stroke="#f0ddb0" stroke-width="1.15"/>
+    <circle cx="60" cy="62" r="31" fill="none" stroke="#f0ddb0" stroke-width=".6" stroke-dasharray="1.4 2.6"/>
+    <path d="M60 40l1.6 4.6H66l-3.8 2.8 1.5 4.6L60 49.2 56.3 52l1.5-4.6-3.8-2.8h4.6z" fill="#f0ddb0"/>
+    <text x="60" y="74" text-anchor="middle" fill="#f8f1e4" font-family="Fraunces, Georgia, serif" font-size="20" letter-spacing="2.5">NICE</text>
+  </svg>`;
+}
+
+function sampleFamily(){
+  const y = String(yearNow());
+  return {
+    sound: false,
+    demo: true,
+    kids: [{
+      id: 'sample',
+      name: 'Nora',
+      pronoun: 'she',
+      entries: { [y]: {
+        deeds: ['helped her brother zip his coat','fed the dog without being asked','shared the good crayons'],
+        date: y + '-12-20',
+        revealed: false
+      }}
+    }]
+  };
+}
+
+function setBody(paper){
+  document.body.classList.toggle('paper', !!paper);
+}
+
+function render(){
+  window.scrollTo(0, 0);
+  if (view === 'setup') { setBody(true); app.innerHTML = setupHTML(); return; }
+  setBody(false);
+  if (view === 'keep') { app.innerHTML = keepHTML(); drawKeepImage(); return; }
+  app.innerHTML = homeHTML();
+}
+
+function yearsLine(kid){
+  const ys = yearsOf(kid);
+  if (!ys.length) return '';
+  return `<p class="years"><span class="lab">Nice List</span>${ys.map(y => `<span><b>${y}</b> <i aria-hidden="true">✓</i><span class="sr"> check</span></span>`).join('')}</p>`;
+}
+
+function setupHTML(){
+  const y = yearNow();
+  const cards = draft.kids.map((kid, i) => {
+    const chips = SUGGESTIONS.map(s => `<button type="button" class="chip" data-chip="${esc(s)}" data-i="${i}" aria-pressed="${kid.deeds.includes(s)}">${esc(s)}</button>`).join('');
+    const chosen = kid.deeds.map((d, di) => `<li><span>${esc(d)}</span><button type="button" data-rm="${di}" data-i="${i}" aria-label="Remove ${esc(d)}">Remove</button></li>`).join('');
+    const past = (() => {
+      if (!editing || !family) return '';
+      const prev = family.kids.find(k => k.id === kid.id);
+      if (!prev) return '';
+      const ys = yearsOf(prev).filter(n => n !== y);
+      return ys.length ? `<p class="past">Already sealed: ${ys.join(', ')}. Saving writes ${y} and keeps those years.</p>` : '';
+    })();
+    return `<section class="card" data-card="${i}">
+      <div class="card-top"><h2>Child ${i+1}</h2>${draft.kids.length>1?`<button type="button" class="ghost-link" data-del="${i}">Remove child</button>`:''}</div>
+      <label for="name${i}">Name</label>
+      <input id="name${i}" data-name data-i="${i}" type="text" maxlength="40" autocomplete="off" autocapitalize="words" placeholder="Emma" value="${esc(kid.name)}">
+      <fieldset><legend>Wording <span class="opt">optional</span></legend>
+        <div class="segs">
+          ${['she','he','they'].map(p => `<button type="button" class="seg" data-pronoun="${p}" data-i="${i}" aria-pressed="${kid.pronoun===p}">${p==='she'?'She':p==='he'?'He':'They'}</button>`).join('')}
+        </div>
+        <p class="hint">So the reading can say “${kid.pronoun==='he'?'he helped':kid.pronoun==='they'?'they helped':'she helped'}” instead of only the name.</p>
+      </fieldset>
+      <label style="display:block;margin-top:14px">Good deeds <span class="opt">pick 2 or 3</span></label>
+      <p class="hint">Tap a few true ones, or write your own. Short is best.</p>
+      <div class="chips">${chips}</div>
+      <div class="addrow">
+        <input data-custom data-i="${i}" type="text" maxlength="60" placeholder="helped Grandpa find his glasses" value="${esc(kid.custom||'')}" aria-label="Your own good deed for child ${i+1}">
+        <button type="button" class="btn slim" data-add="${i}" style="width:auto;padding:0 16px;margin:0">Add</button>
+      </div>
+      ${chosen?`<ol class="chosen">${chosen}</ol>`:`<p class="hint">Two or three. The small ones count.</p>`}
+      ${past}
+    </section>`;
+  }).join('');
+  return `<div class="frame setup"><header class="band"><p class="brand">Little Traditions Co.</p><p class="tag">Make the little moments last</p></header>
+    <h1>${editing?'Edit the list':'Write this year\u2019s good deeds'}</h1>
+    <p class="lede">Add every child, and two or three things they really did. About two minutes. Nothing you type leaves this phone, and the link itself shows none of it.</p>
+    <p id="note" class="note" role="status"></p>
+    ${cards}
+    <button type="button" class="btn ghost" id="addKid">Add another child</button>
+    <button type="button" class="btn" id="seal">${editing?'Save this year':'Seal the list'}</button>
+    ${editing?'<button type="button" class="btn ghost" id="cancelEdit">Back without saving</button><button type="button" class="danger" id="erase">Erase this phone\u2019s list</button>':''}
+    ${!editing?`<p><a class="linkish" href="?demo=1">See a sample reveal</a></p>`:''}
+    <p class="hint">One purchase, every child. Christmas ${y}. The certificate keeps each year you seal, on this phone.</p>
+  </div>`;
+}
+
+function readyDraft(){
+  return draft.kids.length > 0 && draft.kids.every(k => k.name.trim() && k.deeds.length >= 2 && k.deeds.length <= 3);
+}
+function syncDraft(){
+  if (view !== 'setup' || !draft) return;
+  document.querySelectorAll('[data-name]').forEach(el => { draft.kids[+el.dataset.i].name = el.value; });
+  document.querySelectorAll('[data-custom]').forEach(el => { draft.kids[+el.dataset.i].custom = el.value; });
+}
+function rerenderSetup(focus){
+  const y = window.scrollY;
+  syncDraft();
+  render();
+  window.scrollTo(0, y);
+  if (!focus) return;
+  if (focus.kind === 'chip') {
+    document.querySelectorAll(`[data-i="${focus.i}"][data-chip]`).forEach(b => { if (b.dataset.chip === focus.deed) b.focus(); });
+  } else if (focus.kind === 'custom') {
+    const el = document.querySelector(`[data-custom][data-i="${focus.i}"]`);
+    if (el) el.focus();
+  } else if (focus.kind === 'name') {
+    const el = document.getElementById('name' + focus.i);
+    if (el) el.focus();
+  }
+}
+function setNote(t){ const n = $('#note'); if (n) n.textContent = t || ''; }
+function toggleDeed(i, deed){
+  const kid = draft.kids[i];
+  const at = kid.deeds.indexOf(deed);
+  if (at >= 0) kid.deeds.splice(at, 1);
+  else if (kid.deeds.length >= 3) { setNote('Three is the limit. Remove one to add another.'); return; }
+  else kid.deeds.push(deed);
+  setNote('');
+  rerenderSetup({kind:'chip', i, deed});
+}
+function addCustom(i){
+  syncDraft();
+  const kid = draft.kids[i];
+  const v = (kid.custom || '').trim().replace(/\s+/g, ' ');
+  if (!v) return;
+  if (kid.deeds.some(d => d.toLowerCase() === v.toLowerCase())) { kid.custom = ''; setNote('That one is already on the list.'); rerenderSetup({kind:'custom', i}); return; }
+  if (kid.deeds.length >= 3) { setNote('Three is the limit. Remove one to add another.'); return; }
+  kid.deeds.push(v);
+  kid.custom = '';
+  setNote('');
+  rerenderSetup({kind:'custom', i});
+}
+
+function homeHTML(){
+  const y = yearNow();
+  const kids = family.kids;
+  if (!activeId || !kidById(activeId)) activeId = kids[0].id;
+  const kid = kidById(activeId);
+  const entry = entryOf(kid, y);
+  const ready = !!(entry && entry.deeds && entry.deeds.length >= 2);
+  const picker = kids.length > 1
+    ? `<p class="ask">Who is looking?</p><div class="picker" role="radiogroup" aria-label="Who is looking">${kids.map(k => `<button type="button" class="namepick" role="radio" data-pick="${k.id}" aria-checked="${k.id===activeId}">${esc(k.name)}</button>`).join('')}</div>`
+    : '';
+  return `<div class="frame stage" id="stage">
+    <header class="top"><p class="brand">Little Traditions Co.</p><p class="tag">Make the little moments last</p></header>
+    ${demo?'<p class="banner">Sample preview. Nora is not your child, and nothing here is saved. <a href="./" style="color:inherit">Leave preview</a></p>':''}
+    ${picker}
+    <div class="bookwrap"><div class="book" id="book">
+      <div class="spread" id="spread" aria-hidden="true">
+        <p class="kicker">The Nice List · Christmas ${y}</p>
+        <div class="scan" id="scan"><ul id="scanlist"></ul><div class="scanbar" id="scanbar"></div></div>
+        <div class="entry" id="entry"></div>
+        <p class="elf">Sealed by the elves</p>
+        <div class="seal" id="seal">${sealSVG()}</div>
+      </div>
+      <div class="cover" id="cover">
+        <div class="frame-line"></div><div class="ribbon" aria-hidden="true"></div>
+        <p class="k">North Pole</p>
+        <h1>The Nice<br>List</h1>
+        <div class="diamond" aria-hidden="true"></div>
+        <p class="yr">Christmas ${y}</p>
+      </div>
+    </div></div>
+    <div class="actions" id="actions">
+      ${ready?`<button type="button" class="btn" id="check">Check my name</button>`:`<p class="wait">This year\u2019s list is still being written.</p><button type="button" class="btn" id="grown2">For grown-ups</button>`}
+      ${ready && entry.revealed?`<button type="button" class="btn ghost" id="openCert">See the certificate</button>`:''}
+      <button type="button" class="btn text" id="sound" aria-pressed="${family.sound?'true':'false'}">Sound ${family.sound?'on':'off'}</button>
+    </div>
+    <p class="fine"><button type="button" id="grown">Grown-ups</button></p>
+    <button type="button" class="skip" id="skip" hidden>Skip</button>
+  </div>`;
+}
+
+function prepareSpread(kid){
+  const y = yearNow();
+  const names = decoysFor(kid.name);
+  const list = $('#scanlist');
+  list.innerHTML = names.map((n,i) => `<li class="${i===3?'target':''}">${esc(n)}</li>`).join('');
+  const lines = sentences(kid, y);
+  $('#entry').innerHTML = `<h2>${esc(kid.name)}</h2><p class="says">This Christmas, the ledger says</p>` +
+    lines.map((s,i) => `<p class="deed" style="animation-delay:${0.15+i*0.15}s">${esc(s)}</p>`).join('');
+  const bar = $('#scanbar');
+  if (bar) bar.style.transform = 'translateY(0px)';
+}
+
+function startReveal(){
+  if (playing) return;
+  const kid = kidById(activeId);
+  const y = yearNow();
+  if (!kid || !entryOf(kid, y)) return;
+  playing = true;
+  const stage = $('#stage');
+  const book = $('#book');
+  stage.classList.add('playing');
+  $('#skip').hidden = false;
+  prepareSpread(kid);
+  snd.init();
+  if (reduce) { finishReveal(true); return; }
+  book.classList.add('open');
+  snd.open();
+  later(() => {
+    const target = document.querySelector('#scanlist .target');
+    const bar = $('#scanbar');
+    if (target && bar) {
+      const top = Math.max(0, target.offsetTop - 4);
+      bar.style.transition = 'transform 2.35s cubic-bezier(.33,.05,.25,1)';
+      requestAnimationFrame(() => { bar.style.transform = 'translateY(' + top + 'px)'; });
+    }
+  }, 900);
+  later(() => {
+    const target = document.querySelector('#scanlist .target');
+    if (target) target.textContent = kid.name;
+    book.classList.add('found');
+    snd.found();
+    announce(kid.name + ' is on the Nice List.');
+  }, 3000);
+  later(() => {
+    book.classList.add('reading');
+    $('#spread').setAttribute('aria-hidden', 'false');
+    const deeds = [...document.querySelectorAll('#entry .deed')];
+    sentences(kid, y).forEach((s, i) => later(() => {
+      if (deeds[i]) deeds[i].classList.add('show');
+      snd.line();
+      announce(s);
+    }, 280 + i * 1050));
+  }, 4100);
+  const n = sentences(kid, y).length;
+  const stampAt = 4100 + 280 + n * 1050 + 400;
+  later(() => {
+    book.classList.add('stamping');
+    snd.stamp();
+    try { navigator.vibrate && navigator.vibrate(16); } catch (e) {}
+    announce('The seal says nice.');
+  }, stampAt);
+  later(() => finishReveal(false), stampAt + 1700);
+}
+
+function finishReveal(instant){
+  clearTimers();
+  const kid = kidById(activeId);
+  const y = String(yearNow());
+  const book = $('#book');
+  if (!book) { playing = false; return; }
+  if (!$('#entry').innerHTML) prepareSpread(kid);
+  const target = document.querySelector('#scanlist .target');
+  if (target) target.textContent = kid.name;
+  book.classList.add('open','found','reading','done');
+  if (instant) book.classList.add('stamping');
+  document.querySelectorAll('#entry .deed').forEach(el => el.classList.add('show'));
+  $('#spread').setAttribute('aria-hidden', 'false');
+  const entry = entryOf(kid, y);
+  if (entry && !entry.revealed) { entry.revealed = true; save(); }
+  playing = false;
+  $('#skip').hidden = true;
+  const stage = $('#stage');
+  stage.classList.remove('playing');
+  stage.classList.add('revealed');
+  const actions = $('#actions');
+  if (actions) {
+    actions.innerHTML = `<button type="button" class="btn" id="openCert">See the certificate</button>
+      <button type="button" class="btn ghost" id="again">Watch again</button>
+      <button type="button" class="btn text" id="sound" aria-pressed="${family.sound?'true':'false'}">Sound ${family.sound?'on':'off'}</button>`;
+  }
+  announce(reading(kid, yearNow()));
+}
+
+function keepHTML(){
+  const kid = kidById(activeId);
+  const y = yearNow();
+  const lines = sentences(kid, y);
+  const entry = entryOf(kid, y);
+  const alt = keepsakeAlt(kid);
+  return `<div class="frame stage">
+    <header class="top"><p class="brand">Little Traditions Co.</p><p class="tag">Make the little moments last</p></header>
+    ${demo?'<p class="banner">Sample certificate. Nothing was saved.</p>':''}
+    <div class="certwrap">
+      <article class="cert" id="cert" aria-label="${esc(alt)}">
+        <p class="ey">Little Traditions Co.</p>
+        <p class="motto">Make the little moments last</p>
+        <p class="listname">The Nice List</p>
+        <p class="season">Christmas ${y}</p>
+        <h2>${esc(kid.name)}</h2>
+        <p class="sub">is on Santa\u2019s Nice List</p>
+        <hr class="rule">
+        ${lines.map(s => `<p class="deed">${esc(s)}</p>`).join('')}
+        <div class="seal">${sealSVG()}</div>
+        <p class="when">Sealed ${esc(prettyDate(entry && entry.date))}</p>
+        ${yearsLine(kid)}
+        <p class="foot">${demo?'Sample preview · ':''}Kept on this phone</p>
+      </article>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" id="share">Share</button>
+      <div class="row2"><button type="button" class="btn ghost" id="saveimg">Save image</button><button type="button" class="btn ghost" id="savepdf">Save PDF</button></div>
+      <p class="fine links">
+        <button type="button" id="again">Watch again</button>
+        ${family.kids.length>1?'<button type="button" id="another">Check another name</button>':''}
+        <button type="button" id="backHome">Back to the book</button>
+      </p>
+    </div>
+    <p class="msg" id="msg" role="status"></p>
+  </div>`;
+}
+
+let certCanvas = null;
+function msg(t){ const n = $('#msg'); if (n) n.textContent = t || ''; }
+
+function trackText(ctx, text, cx, y, spacing){
+  const prev = ctx.textAlign;
+  ctx.textAlign = 'left';
+  const chars = [...text];
+  const widths = chars.map(ch => ctx.measureText(ch).width);
+  const total = widths.reduce((a,b)=>a+b,0) + spacing * Math.max(0, chars.length-1);
+  let x = cx - total / 2;
+  chars.forEach((ch,i) => { ctx.fillText(ch, x, y); x += widths[i] + spacing; });
+  ctx.textAlign = prev;
+}
+function wrap(ctx, text, max){
+  const words = String(text).split(' ');
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    const t = line ? line + ' ' + w : w;
+    if (ctx.measureText(t).width > max && line) { lines.push(line); line = w; }
+    else line = t;
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+function star(ctx, x, y, r){
+  ctx.beginPath();
+  ctx.moveTo(x, y - r);
+  for (let i = 1; i < 8; i++) {
+    const R = i % 2 ? r * .42 : r;
+    const a = -Math.PI/2 + i * Math.PI/4;
+    ctx.lineTo(x + Math.cos(a)*R, y + Math.sin(a)*R);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+async function drawCertificate(kid){
+  try { await document.fonts.load('500 72px Fraunces'); await document.fonts.load('600 22px Outfit'); await document.fonts.ready; } catch (e) {}
+  const W = 1200, H = 1680;
+  const c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = '#f4efe6';
+  x.fillRect(0,0,W,H);
+  for (let i = 0; i < 1800; i++) {
+    x.fillStyle = `rgba(36,24,22,${Math.random()*0.035})`;
+    x.fillRect(Math.random()*W, Math.random()*H, 1.2, 1.2);
+  }
+  x.strokeStyle = '#143128'; x.lineWidth = 3; x.strokeRect(54, 54, W-108, H-108);
+  x.strokeStyle = '#b08948'; x.lineWidth = 1.25; x.strokeRect(70, 70, W-140, H-140);
+  sprig(x, 108, 118, 0.4);
+  sprig(x, W-108, 118, 2.2);
+  sprig(x, 108, H-118, -0.6);
+  sprig(x, W-108, H-118, 3.6);
+  x.textAlign = 'center';
+  x.fillStyle = '#143128';
+  x.font = '600 22px Outfit, sans-serif';
+  trackText(x, 'LITTLE TRADITIONS CO.', W/2, 210, 6);
+  x.font = 'italic 500 32px Fraunces, Georgia, serif';
+  x.fillStyle = '#6f5424';
+  x.fillText('Make the little moments last', W/2, 262);
+  x.fillStyle = '#6f5424';
+  x.font = '600 20px Outfit, sans-serif';
+  trackText(x, 'THE NICE LIST', W/2, 360, 7);
+  const yNow = yearNow();
+  x.font = 'italic 500 40px Fraunces, Georgia, serif';
+  x.fillStyle = '#241816';
+  x.fillText('Christmas ' + yNow, W/2, 420);
+  let size = 104;
+  x.fillStyle = '#143128';
+  do { size -= 2; x.font = '500 ' + size + 'px Fraunces, Georgia, serif'; }
+  while (x.measureText(kid.name).width > 980 && size > 54);
+  x.fillText(kid.name, W/2, 580);
+  x.font = '500 32px Outfit, sans-serif';
+  x.fillStyle = '#241816';
+  x.fillText('is on Santa\u2019s Nice List', W/2, 650);
+  x.strokeStyle = '#b08948'; x.lineWidth = 1.5;
+  x.beginPath(); x.moveTo(W/2-70, 700); x.lineTo(W/2+70, 700); x.stroke();
+  const lines = sentences(kid, yNow);
+  let y = 780;
+  x.fillStyle = '#241816';
+  x.font = 'italic 500 36px Fraunces, Georgia, serif';
+  lines.forEach(s => {
+    wrap(x, s, 860).forEach(ln => { x.fillText(ln, W/2, y); y += 50; });
+    y += 12;
+  });
+  const sy = Math.max(y + 70, 1120);
+  drawWax(x, W/2, sy, 92);
+  x.fillStyle = '#6f5424';
+  x.font = '600 20px Outfit, sans-serif';
+  const entry = entryOf(kid, yNow);
+  trackText(x, 'SEALED ' + prettyDate(entry && entry.date).toUpperCase(), W/2, sy + 150, 3);
+  const ys = yearsOf(kid);
+  const yy = H - 210;
+  x.textAlign = 'left';
+  x.textBaseline = 'alphabetic';
+  const bits = ys.map(n => String(n));
+  x.font = '600 18px Outfit, sans-serif';
+  const label = 'NICE LIST';
+  const labelW = [...label].reduce((w, ch) => w + x.measureText(ch).width + 4, 0) + 18;
+  x.font = '500 34px Fraunces, Georgia, serif';
+  const bitW = bits.map(t => x.measureText(t).width + 36);
+  const total = labelW + bitW.reduce((a,b)=>a+b,0);
+  let cx = (W - total) / 2;
+  x.font = '600 18px Outfit, sans-serif';
+  x.fillStyle = '#6f5424';
+  trackTextAt(x, label, cx, yy, 4);
+  cx += labelW;
+  bits.forEach((t,i) => {
+    x.font = '500 34px Fraunces, Georgia, serif';
+    x.fillStyle = '#143128';
+    x.fillText(t, cx, yy);
+    const tw = x.measureText(t).width;
+    x.strokeStyle = '#a3182f';
+    x.lineWidth = 2.4;
+    x.lineCap = 'round';
+    x.beginPath();
+    x.moveTo(cx + tw + 8, yy - 8);
+    x.lineTo(cx + tw + 14, yy - 2);
+    x.lineTo(cx + tw + 26, yy - 18);
+    x.stroke();
+    cx += bitW[i];
+  });
+  x.textAlign = 'center';
+  x.font = '500 20px Outfit, sans-serif';
+  x.fillStyle = '#5c4a42';
+  x.fillText((demo ? 'Sample preview  ·  ' : '') + 'Kept on this phone', W/2, H - 130);
+  certCanvas = c;
+  return c;
+}
+function trackTextAt(ctx, text, x0, y, spacing){
+  let x = x0;
+  for (const ch of text) {
+    ctx.fillText(ch, x, y);
+    x += ctx.measureText(ch).width + spacing;
+  }
+}
+function sprig(ctx, x, y, rot){
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(rot);
+  ctx.strokeStyle = '#1d4a3a';
+  ctx.lineWidth = 2.2;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(0, 0); ctx.quadraticCurveTo(18, -6, 42, -2);
+  ctx.moveTo(10, -1); ctx.quadraticCurveTo(16, -16, 26, -18);
+  ctx.moveTo(22, -2); ctx.quadraticCurveTo(30, -14, 40, -10);
+  ctx.stroke();
+  ctx.fillStyle = '#8e2f3a';
+  ctx.beginPath(); ctx.arc(40, 0, 3.3, 0, 7); ctx.fill();
+  ctx.restore();
+}
+function drawWax(ctx, cx, cy, r){
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(-8 * Math.PI/180);
+  ctx.beginPath();
+  const steps = 64;
+  for (let i = 0; i <= steps; i++) {
+    const a = (i/steps) * Math.PI * 2;
+    const wob = 1 + 0.04*Math.sin(a*5) + 0.02*Math.sin(a*11+1.2);
+    const px = Math.cos(a)*r*wob, py = Math.sin(a)*r*wob;
+    if (i===0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = '#8e2f3a';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(90,20,30,.35)';
+  ctx.lineWidth = 6;
+  ctx.stroke();
+  ctx.beginPath(); ctx.arc(0, 0, r*0.72, 0, 7);
+  ctx.strokeStyle = '#f0ddb0'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.beginPath(); ctx.arc(0, 0, r*0.62, 0, 7);
+  ctx.setLineDash([3, 5]); ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#f0ddb0';
+  star(ctx, 0, -r*0.28, 8);
+  ctx.fillStyle = '#f8f1e4';
+  ctx.font = '500 36px Fraunces, Georgia, serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('NICE', 0, r*0.12);
+  ctx.restore();
+}
+
+async function drawKeepImage(){
+  const kid = kidById(activeId);
+  if (!kid) return;
+  const canvas = await drawCertificate(kid);
+  const url = canvas.toDataURL('image/png');
+  const cert = $('#cert');
+  if (!cert) return;
+  const alt = keepsakeAlt(kid);
+  cert.innerHTML = `<img src="${url}" alt="${esc(alt)}">`;
+  cert.style.padding = '0';
+  cert.style.background = 'transparent';
+  cert.style.boxShadow = '0 18px 40px rgba(0,0,0,.28)';
+}
+
+function fileBase(kid){
+  const slug = (kid.name || 'child').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 40) || 'child';
+  return 'nice-list-' + slug + '-' + yearNow();
+}
+function downloadBlob(blob, name){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+async function canvasBlob(type, q){
+  if (!certCanvas) await drawCertificate(kidById(activeId));
+  return new Promise(res => certCanvas.toBlob(res, type, q));
+}
+function jpegPdf(jpeg, iw, ih){
+  const pw = 612, ph = Math.round(pw * ih / iw);
+  const content = `q\n${pw} 0 0 ${ph} 0 0 cm\n/Im0 Do\nQ\n`;
+  const enc = new TextEncoder();
+  const chunks = [];
+  let len = 0;
+  const add = b => { chunks.push(b); len += b.length; };
+  const str = s => add(enc.encode(s));
+  const offsets = [];
+  str('%PDF-1.4\n');
+  offsets[1] = len; str('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  offsets[2] = len; str('2 0 obj\n<< /Type /Pages /Count 1 /Kids [3 0 R] >>\nendobj\n');
+  offsets[3] = len; str(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Contents 4 0 R /Resources << /XObject << /Im0 5 0 R >> >> >>\nendobj\n`);
+  offsets[4] = len; str(`4 0 obj\n<< /Length ${enc.encode(content).length} >>\nstream\n${content}endstream\nendobj\n`);
+  offsets[5] = len;
+  str(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width ${iw} /Height ${ih} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);
+  add(jpeg);
+  str('\nendstream\nendobj\n');
+  const xref = len;
+  str('xref\n0 6\n');
+  str('0000000000 65535 f \n');
+  for (let i = 1; i <= 5; i++) str(String(offsets[i]).padStart(10,'0') + ' 00000 n \n');
+  str(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
+  const out = new Uint8Array(len);
+  let p = 0;
+  for (const c of chunks) { out.set(c, p); p += c.length; }
+  return new Blob([out], {type:'application/pdf'});
+}
+
+function openMod(html){
+  lastFocus = document.activeElement;
+  $('#sheet').innerHTML = html;
+  $('#mod').hidden = false;
+  const f = $('#sheet').querySelector('button, a, input');
+  if (f) f.focus();
+}
+function closeMod(){
+  $('#mod').hidden = true;
+  $('#sheet').innerHTML = '';
+  if (lastFocus && lastFocus.focus) lastFocus.focus();
+}
+function grownSheet(){
+  openMod(`<h2>For grown-ups</h2>
+    <p>Names and good deeds stay on this phone. The web address does not include them.</p>
+    <button type="button" class="btn" id="toEdit">Edit names and deeds</button>
+    <button type="button" class="btn ghost" id="toHow">How to film it</button>
+    <button type="button" class="btn ghost" id="closeMod">Back to the book</button>`);
+}
+function howSheet(){
+  openMod(`<h2>How to film it</h2>
+    <ol>
+      <li>Hold the phone upright. Tap Sound if you want the soft notes.</li>
+      <li>Start recording, then hand the phone over.</li>
+      <li>They tap Check my name. The book, the deeds, and the seal stay in the frame.</li>
+    </ol>
+    <p><b>Keep it on your home screen.</b> iPhone: Share, then Add to Home Screen. Android: the browser menu, then Add to Home screen.</p>
+    <p>Please don\u2019t post your link. It is made for one household.</p>
+    <button type="button" class="btn" id="closeMod">Back</button>`);
+}
+function goEdit(){
+  closeMod();
+  const y = String(yearNow());
+  draft = {kids: family.kids.map(k => ({
+    id: k.id,
+    name: k.name,
+    pronoun: k.pronoun || '',
+    deeds: (k.entries && k.entries[y] ? k.entries[y].deeds.slice() : []),
+    custom: ''
+  }))};
+  if (!draft.kids.length) draft.kids.push(blankKid());
+  editing = true;
+  view = 'setup';
+  render();
+}
+function sealList(){
+  syncDraft();
+  if (!readyDraft()) {
+    setNote('Each child needs a name and two or three good deeds.');
+    const bad = draft.kids.findIndex(k => !k.name.trim() || k.deeds.length < 2);
+    const el = document.getElementById('name' + Math.max(0, bad));
+    if (el && !draft.kids[Math.max(0,bad)].name.trim()) el.focus();
+    return;
+  }
+  const y = String(yearNow());
+  const prevKids = (family && family.kids) || [];
+  const kids = draft.kids.map(k => {
+    const prev = prevKids.find(p => p.id === k.id);
+    const entries = Object.assign({}, prev ? prev.entries : {});
+    const old = entries[y] || {};
+    entries[y] = {deeds: k.deeds.slice(), date: old.date || todayISO(), revealed: !!old.revealed};
+    return {id: k.id, name: k.name.trim(), pronoun: k.pronoun || '', entries};
+  });
+  family = {sound: !!(family && family.sound), kids};
+  save();
+  editing = false;
+  draft = null;
+  activeId = kids[0].id;
+  view = 'home';
+  render();
+}
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('button, a');
+  if (!t) {
+    if (e.target.id === 'mod') closeMod();
+    return;
+  }
+  if (t.id === 'addKid') {
+    syncDraft();
+    draft.kids.push(blankKid());
+    rerenderSetup({kind:'name', i: draft.kids.length-1});
+    const card = document.querySelector('[data-card="'+(draft.kids.length-1)+'"]');
+    if (card) card.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'});
+    return;
+  }
+  if (t.dataset.del !== undefined) {
+    syncDraft();
+    draft.kids.splice(+t.dataset.del, 1);
+    rerenderSetup();
+    return;
+  }
+  if (t.dataset.chip !== undefined) { toggleDeed(+t.dataset.i, t.dataset.chip); return; }
+  if (t.dataset.add !== undefined) { addCustom(+t.dataset.add); return; }
+  if (t.dataset.rm !== undefined) {
+    syncDraft();
+    draft.kids[+t.dataset.i].deeds.splice(+t.dataset.rm, 1);
+    setNote('');
+    rerenderSetup();
+    return;
+  }
+  if (t.dataset.pronoun) {
+    syncDraft();
+    const kid = draft.kids[+t.dataset.i];
+    kid.pronoun = kid.pronoun === t.dataset.pronoun ? '' : t.dataset.pronoun;
+    rerenderSetup();
+    return;
+  }
+  if (t.id === 'seal') { sealList(); return; }
+  if (t.id === 'cancelEdit') { editing = false; draft = null; view = 'home'; render(); return; }
+  if (t.id === 'erase') {
+    if (t.dataset.arm !== '1') { t.dataset.arm = '1'; t.textContent = 'Tap again to erase everything'; return; }
+    family = null; draft = {kids:[blankKid()]}; editing = false;
+    try { localStorage.removeItem(KEY); } catch (err) {}
+    view = 'setup'; render(); return;
+  }
+  if (t.dataset.pick) {
+    if (playing) return;
+    activeId = t.dataset.pick;
+    view = 'home'; render(); return;
+  }
+  if (t.id === 'check') { snd.init(); startReveal(); return; }
+  if (t.id === 'skip') { finishReveal(true); return; }
+  if (t.id === 'again') {
+    view = 'home'; render();
+    requestAnimationFrame(() => startReveal());
+    return;
+  }
+  if (t.id === 'openCert') { view = 'keep'; render(); return; }
+  if (t.id === 'backHome' || t.id === 'another') { view = 'home'; render(); return; }
+  if (t.id === 'sound') {
+    family.sound = !family.sound;
+    save();
+    t.setAttribute('aria-pressed', family.sound ? 'true' : 'false');
+    t.textContent = 'Sound ' + (family.sound ? 'on' : 'off');
+    if (family.sound) { snd.init(); snd.on(); }
+    return;
+  }
+  if (t.id === 'grown' || t.id === 'grown2') { grownSheet(); return; }
+  if (t.id === 'toEdit') { if (demo) { openMod(`<h2>This is a preview</h2><p>The sample child stays in the page. Your family\u2019s list, if you have one on this phone, is left alone.</p><button type="button" class="btn" id="closeMod">Back</button>`); return; } goEdit(); return; }
+  if (t.id === 'toHow') { howSheet(); return; }
+  if (t.id === 'closeMod') { closeMod(); return; }
+  if (t.id === 'share' || t.id === 'saveimg' || t.id === 'savepdf') { exportCert(t.id); return; }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.dataset && e.target.dataset.custom !== undefined) {
+    e.preventDefault();
+    addCustom(+e.target.dataset.i);
+  }
+  if (e.key === 'Escape' && !$('#mod').hidden) closeMod();
+});
+
+async function exportCert(kind){
+  const kid = kidById(activeId);
+  try {
+    if (!certCanvas) await drawCertificate(kid);
+    const base = fileBase(kid);
+    if (kind === 'savepdf') {
+      const jpeg = await canvasBlob('image/jpeg', 0.92);
+      const bytes = new Uint8Array(await jpeg.arrayBuffer());
+      const pdf = jpegPdf(bytes, certCanvas.width, certCanvas.height);
+      downloadBlob(pdf, base + '.pdf');
+      msg('If the PDF did not save, use Share, or press and hold the certificate.');
+      return;
+    }
+    const png = await canvasBlob('image/png');
+    if (kind === 'share') {
+      const file = new File([png], base + '.png', {type:'image/png'});
+      const text = kid.name + ' is on the Nice List. Christmas ' + yearNow() + '.';
+      if (navigator.canShare && navigator.canShare({files:[file]})) {
+        await navigator.share({files:[file], title:'The Nice List', text});
+        msg('');
+        return;
+      }
+    }
+    downloadBlob(png, base + '.png');
+    msg(kind === 'share'
+      ? 'Sharing is not available in this browser. The picture was saved instead. You can also press and hold the certificate.'
+      : 'If nothing saved, press and hold the certificate, then send it from your photos.');
+  } catch (err) {
+    if (err && err.name === 'AbortError') return;
+    msg('Saving was blocked here. Press and hold the certificate instead.');
+  }
+}
+
+function boot(){
+  const q = new URLSearchParams(location.search);
+  demo = q.get('demo') === '1' || q.get('preview') === '1' || q.has('demo') && q.get('demo') !== '0';
+  if (demo) {
+    family = sampleFamily();
+    activeId = 'sample';
+    view = 'home';
+  } else {
+    family = load();
+    if (family && Array.isArray(family.kids) && family.kids.length && family.kids.every(k => k && k.name && k.entries)) {
+      view = 'home';
+      activeId = family.kids[0].id;
+    } else {
+      family = null;
+      draft = {kids:[blankKid()]};
+      editing = false;
+      view = 'setup';
+    }
+  }
+  render();
+}
+boot();
+</script>
+</body>
+</html>
